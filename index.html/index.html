@@ -463,7 +463,7 @@
       z-index: 2;
       overflow: hidden;
       color: #17141d;
-      background: linear-gradient(180deg, #fff 0%, #fafafa 72%, #f3f3f6 100%);
+      background: #f6f6f6;
     }
 
     .home-screen.mode-leaving .home-header,
@@ -482,26 +482,27 @@
     }
 
     .home-header {
-      padding: 72px 18px 14px;
+      padding: 86px 30px 24px;
     }
 
     .home-header h1 {
-      margin: 0 0 7px;
-      font-size: 20px;
+      margin: 0 0 8px;
+      font-size: 22px;
       line-height: 1.25;
       letter-spacing: -.04em;
+      font-weight: 800;
     }
 
     .home-header p {
       margin: 0;
-      color: #98959d;
-      font-size: 12px;
+      color: #9a969f;
+      font-size: 13px;
     }
 
     .home-content {
       flex: 1;
       min-height: 0;
-      padding: 4px 10px 112px;
+      padding: 0 24px 112px;
       overflow: hidden;
     }
 
@@ -509,28 +510,32 @@
     .district-card,
     .map-card,
     .favorite-row {
-      border: 1px solid rgba(18,15,25,.05);
-      background: rgba(255,255,255,.96);
-      box-shadow: 0 4px 14px rgba(30,20,55,.06);
+      border: 1px solid rgba(18,15,25,.045);
+      background: #fff;
+      box-shadow: 0 4px 12px rgba(22,18,34,.07);
     }
 
     .nearby-card {
       width: 100%;
-      height: 74px;
-      border-radius: 13px;
+      height: 58px;
+      border-radius: 9px;
       display: grid;
-      grid-template-columns: 42px 1fr 28px;
+      grid-template-columns: 34px 1fr 20px;
       align-items: center;
-      padding: 0 14px;
+      padding: 0 12px;
       color: #201c25;
       text-align: left;
     }
 
     .pin-icon {
       width: 25px;
-      height: 31px;
-      color: #6b2cff;
+      height: 25px;
+      padding: 4px;
+      border-radius: 8px;
+      color: #7d36ff;
       fill: currentColor;
+      background: #f2eaff;
+      filter: drop-shadow(0 4px 7px rgba(123,54,255,.14));
     }
 
     .nearby-card strong,
@@ -543,7 +548,7 @@
     .nearby-card small,
     .district-card small {
       display: block;
-      margin-top: 5px;
+      margin-top: 4px;
       color: #aaa7af;
       font-size: 11px;
     }
@@ -551,52 +556,79 @@
     .chevron {
       width: 19px;
       height: 19px;
-      stroke: #47434b;
+      stroke: #2f2b34;
       fill: none;
       stroke-width: 1.8;
     }
 
     .home-pair {
-      height: 114px;
-      margin-top: 8px;
+      height: 94px;
+      margin-top: 10px;
       display: grid;
-      grid-template-columns: 1.6fr 1fr;
-      gap: 8px;
+      grid-template-columns: 164px 124px;
+      justify-content: center;
+      gap: 10px;
     }
 
     .district-card,
     .map-card {
-      border-radius: 13px;
+      border-radius: 9px;
     }
 
     .district-card {
-      padding: 19px 14px;
+      position: relative;
+      padding: 14px 11px;
       color: #201c25;
       text-align: left;
     }
 
-    .district-card strong { color: #6733d8; }
-    .format-tags { margin-top: 13px; display: flex; gap: 6px; }
+    .district-card strong { color: #6b28ff; font-size: 20px; line-height: 1; }
+    .district-card small { color: #222; font-size: 10px; }
+    .district-chevron {
+      position: absolute;
+      top: 17px;
+      right: 12px;
+      width: 15px;
+      height: 15px;
+      stroke: #2f2b34;
+      fill: none;
+      stroke-width: 1.8;
+    }
+    .format-tags { margin-top: 14px; display: flex; gap: 6px; }
     .format-tags span {
-      padding: 3px 6px;
-      border-radius: 5px;
-      color: #7541e4;
-      background: #f0e8ff;
+      padding: 4px 6px;
+      border-radius: 4px;
+      color: #6b28ff;
+      background: #efe5ff;
       font-size: 10px;
       font-weight: 700;
     }
 
     .map-card {
+      position: relative;
       display: grid;
-      place-items: center;
-      color: #7b7781;
-      font-size: 12px;
+      place-items: end center;
+      padding-bottom: 15px;
+      overflow: hidden;
+      color: #fff;
+      font-size: 11px;
+      font-weight: 600;
+      background: #151127 url("../img/figma/fast-map-thumb.png") center / cover no-repeat;
     }
 
-    .map-card .pin-icon { width: 24px; height: 29px; margin-bottom: 5px; }
+    .map-card::after {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(180deg, rgba(9,6,24,0) 35%, rgba(9,6,24,.48) 100%);
+      pointer-events: none;
+    }
+
+    .map-card span { position: relative; z-index: 1; }
+    .map-card .pin-icon { display: none; }
 
     .favorites-title {
-      margin: 24px 2px 11px;
+      margin: 40px 4px 14px;
       display: flex;
       align-items: center;
       justify-content: space-between;
@@ -604,45 +636,75 @@
 
     .favorites-title h2 {
       margin: 0;
-      font-size: 16px;
+      font-size: 18px;
       letter-spacing: -.04em;
     }
 
     .favorites-title button {
       border: 0;
-      color: #918d96;
+      color: #6f6875;
       background: transparent;
-      font-size: 11px;
+      font-size: 13px;
     }
 
-    .favorite-list { display: grid; gap: 7px; }
+    .favorite-list { display: grid; gap: 9px; }
     .favorite-row {
       height: 50px;
-      border-radius: 12px;
+      border-radius: 9px;
       display: grid;
       grid-template-columns: 1fr auto 22px;
       align-items: center;
-      padding: 0 12px 0 14px;
+      padding: 0 11px 0 14px;
       color: #29252e;
-      font-size: 13px;
+      font-size: 15px;
       font-weight: 600;
       text-align: left;
     }
 
+    .favorite-row.selected {
+      border-color: #842cff;
+      box-shadow: 0 0 0 1px #842cff, 0 5px 12px rgba(78,34,129,.08);
+    }
+
     .favorite-row span {
       color: #9c98a1;
-      font-size: 11px;
+      font-size: 14px;
       font-weight: 500;
     }
 
+    .favorite-benefit {
+      position: relative;
+      width: 18px;
+      height: 18px;
+      margin-left: 8px;
+      border-radius: 5px;
+      background: linear-gradient(135deg, #efe6ff, #fff);
+      box-shadow: inset 0 0 0 1px rgba(120,47,255,.14);
+    }
+
+    .favorite-benefit::before,
+    .favorite-benefit::after {
+      content: "";
+      position: absolute;
+      top: 5px;
+      width: 5px;
+      height: 8px;
+      border-radius: 2px;
+      background: #8a34ff;
+    }
+
+    .favorite-benefit::before { left: 4px; }
+    .favorite-benefit::after { right: 4px; opacity: .45; }
+
     .all-theaters {
       width: 100%;
-      height: 48px;
-      margin-top: 11px;
+      height: 52px;
+      margin-top: 10px;
       border: 1.5px solid #a56aff;
-      border-radius: 10px;
-      color: #8347ef;
+      border-radius: 9px;
+      color: #782cff;
       background: #fff;
+      font-size: 18px;
       font-weight: 700;
     }
 
@@ -652,12 +714,12 @@
       left: 0;
       right: 0;
       bottom: 0;
-      height: 102px;
+      height: 105px;
       display: grid;
       grid-template-columns: 1fr 1fr 1fr;
       align-items: start;
-      padding: 15px 35px 8px;
-      border-radius: 28px 28px 0 0;
+      padding: 18px 39px 8px;
+      border-radius: 26px 26px 0 0;
       background: rgba(255,255,255,.98);
       box-shadow: 0 -5px 18px rgba(32,22,52,.07);
     }
@@ -668,27 +730,29 @@
       display: flex;
       flex-direction: column;
       align-items: center;
-      gap: 4px;
-      color: #4d4952;
+      gap: 5px;
+      color: #56515b;
       background: transparent;
-      font-size: 10px;
+      font-size: 11px;
       cursor: pointer;
     }
 
     .home-nav-btn svg {
-      width: 24px;
-      height: 24px;
+      width: 25px;
+      height: 25px;
       stroke: currentColor;
       fill: none;
       stroke-width: 1.8;
+      filter: drop-shadow(0 6px 8px rgba(94,42,180,.13));
     }
 
-    .home-nav-btn.active svg { fill: #151219; stroke: #151219; }
+    .home-nav-btn.active { color: #221d27; }
+    .home-nav-btn.active svg { fill: #ede6ff; stroke: #7b35ff; }
 
     .mega-mode-btn {
-      width: 82px;
-      height: 82px;
-      margin: -42px auto 0;
+      width: 72px;
+      height: 72px;
+      margin: -35px auto 0;
       border: 0;
       border-radius: 50%;
       display: grid;
@@ -696,7 +760,7 @@
       color: #fff;
       background: linear-gradient(145deg, #a100e9, #2400ff 76%);
       box-shadow: 0 8px 22px rgba(72,21,229,.32), inset 0 1px 0 rgba(255,255,255,.3);
-      font-size: 18px;
+      font-size: 15px;
       font-weight: 800;
       line-height: .9;
       letter-spacing: -.06em;
@@ -892,7 +956,10 @@
       border-radius: 22px;
       padding: 0;
       overflow: hidden;
-      background: #100b27;
+      background-color: #100b27;
+      background-position: center;
+      background-size: cover;
+      background-repeat: no-repeat;
       box-shadow: 0 14px 24px rgba(0,0,0,.42);
       cursor: pointer;
       transform-style: preserve-3d;
@@ -1892,6 +1959,305 @@
         animation: none;
       }
     }
+
+    /* ── Spot screen (FAST MODE) ──────────────────────── */
+    .spot-screen { background: #f6f6f6; color: #111; display: flex; flex-direction: column; }
+    .spot-topbar {
+      position: relative;
+      display: flex;
+      align-items: center;
+      justify-content: flex-end;
+      padding: 52px 21px 9px;
+      flex-shrink: 0;
+      background: #f6f6f6;
+    }
+    .spot-brand {
+      position: absolute;
+      left: 50%;
+      transform: translateX(-50%);
+      font-size: 21px;
+      font-weight: 800;
+      color: #6b28ff;
+      letter-spacing: -.03em;
+    }
+    .spot-topbar .icon-btn { color: #333; }
+    .spot-topbar .icon-btn svg { stroke: #333; fill: none; stroke-width: 2; stroke-linecap: round; }
+    .spot-dates {
+      display: flex;
+      gap: 8px;
+      padding: 13px 19px 18px;
+      flex-shrink: 0;
+      background: #f6f6f6;
+    }
+    .spot-date {
+      width: 60px;
+      height: 56px;
+      border: 1px solid transparent;
+      border-radius: 8px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      background: #fff;
+      box-shadow: 0 5px 12px rgba(26,20,38,.08);
+      cursor: pointer;
+      color: #35303a;
+      font-size: 14px;
+      font-weight: 700;
+      gap: 1px;
+    }
+    .spot-date-today { font-size: 11px; color: #8a35ff; font-weight: 800; }
+    .spot-date.active { color: #6b28ff; border-color: #9a56ff; box-shadow: 0 5px 13px rgba(126,47,255,.14); }
+    .spot-scroll { flex: 1; overflow-y: auto; padding: 0 20px 118px; }
+    .spot-section-label { margin: 0; padding: 0 0 13px; font-size: 16px; color: #161219; font-weight: 800; letter-spacing: -.03em; }
+    .spot-movie {
+      position: relative;
+      min-height: 118px;
+      margin-bottom: 11px;
+      display: flex;
+      align-items: stretch;
+    }
+    .spot-poster {
+      position: relative;
+      z-index: 2;
+      width: 78px;
+      height: 118px;
+      border-radius: 8px 0 0 8px;
+      object-fit: cover;
+      background: #e0e0e0;
+      flex-shrink: 0;
+      box-shadow: 0 5px 13px rgba(20,14,32,.1);
+    }
+    .spot-info {
+      flex: 1;
+      min-width: 0;
+      margin-left: -1px;
+      padding: 19px 11px 12px 19px;
+      border-radius: 0 12px 12px 0;
+      background: #fff;
+      box-shadow: 0 5px 13px rgba(26,20,38,.08);
+    }
+    .spot-movie-header { display: flex; align-items: center; justify-content: space-between; margin-bottom: 7px; }
+    .spot-title { font-size: 16px; font-weight: 800; color: #161219; letter-spacing: -.03em; }
+    .spot-arrow { stroke: #ccc; fill: none; stroke-linecap: round; stroke-linejoin: round; stroke-width: 2; }
+    .spot-tag { display: inline-flex; align-items: center; gap: 5px; margin-bottom: 14px; }
+    .spot-tag-age { font-size: 10px; font-weight: 800; color: #fff; background: #7b35ff; border-radius: 4px; padding: 2px 5px; }
+    .spot-tag-genre { font-size: 12px; color: #6b28ff; background: transparent; border-radius: 0; padding: 0; font-weight: 700; }
+    .spot-times { display: flex; gap: 7px; flex-wrap: nowrap; }
+    .spot-time-btn {
+      min-width: 43px;
+      height: 31px;
+      font-size: 12px;
+      padding: 0 7px;
+      border-radius: 5px;
+      border: 1.2px solid #d6d3d9;
+      background: #fff;
+      color: #28242d;
+      cursor: pointer;
+      transition: border-color .15s ease, color .15s ease, background .15s ease, box-shadow .15s ease;
+    }
+    .spot-time-btn:hover,
+    .spot-time-btn.selected { border-color: #842cff; color: #161219; background: #fff; box-shadow: 0 0 0 1px rgba(132,44,255,.25); }
+    .spot-screen .home-nav { background: rgba(255,255,255,.98); border-top: 0; box-shadow: 0 -5px 18px rgba(32,22,52,.07); }
+    .spot-screen .home-nav-btn { color: #888; }
+    .spot-screen .home-nav-btn.active { color: #111; }
+    .spot-screen .home-nav-btn.active svg { fill: #111; stroke: #111; }
+
+    /* ── Spot seat screen (FAST MODE) ──────────────────────── */
+    .spot-seat-screen { background: #f6f6f6; color: #111; display: flex; flex-direction: column; }
+    .spot-seat-topbar {
+      position: relative;
+      display: flex;
+      align-items: center;
+      padding: 52px 17px 9px;
+      gap: 4px;
+      flex-shrink: 0;
+      background: #f6f6f6;
+      border-bottom: 0;
+    }
+    .spot-seat-topbar .icon-btn svg { stroke: #333; fill: none; stroke-linecap: round; stroke-linejoin: round; stroke-width: 2; }
+    .spot-seat-header-title {
+      position: absolute;
+      left: 50%;
+      transform: translateX(-50%);
+      font-size: 15px;
+      font-weight: 800;
+      color: #111;
+      letter-spacing: -.02em;
+    }
+    .spot-progress {
+      position: relative;
+      display: flex;
+      align-items: flex-start;
+      padding: 14px 25px 0;
+      height: 66px;
+      background: #f6f6f6;
+      border-bottom: 0;
+      flex-shrink: 0;
+    }
+    .spot-progress::before {
+      content: "";
+      position: absolute;
+      left: 43px;
+      right: 43px;
+      top: 20px;
+      height: 2px;
+      background: linear-gradient(90deg, #b8b8b8 0 62%, #842cff 62% 78%, #b8b8b8 78% 100%);
+    }
+    .spot-step {
+      position: relative;
+      flex: 1;
+      padding-top: 20px;
+      text-align: center;
+      font-size: 11px;
+      color: #35303a;
+    }
+    .spot-step::before {
+      content: "";
+      position: absolute;
+      top: -1px;
+      left: 50%;
+      width: 12px;
+      height: 12px;
+      border-radius: 50%;
+      background: #b8b8b8;
+      transform: translateX(-50%);
+      box-shadow: 0 0 0 2px #f6f6f6;
+    }
+    .spot-step.active { color: #842cff; font-weight: 800; }
+    .spot-step.active::before { background: #842cff; }
+    .spot-step.done { color: #35303a; }
+    .spot-step-sep { display: none; }
+    .spot-seat-movie-info {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      margin: 4px 19px 10px;
+      padding: 0 12px;
+      min-height: 93px;
+      border-radius: 11px;
+      background: #fff;
+      box-shadow: 0 5px 13px rgba(26,20,38,.08);
+      flex-shrink: 0;
+    }
+    .spot-seat-poster { width: 57px; height: 81px; border-radius: 5px; object-fit: cover; background: #e0e0e0; flex-shrink: 0; }
+    .spot-seat-movie-name { font-size: 16px; font-weight: 800; color: #111; letter-spacing: -.03em; }
+    .spot-seat-meta { font-size: 11px; color: #4e4853; margin-top: 10px; line-height: 1.8; }
+    .spot-seat-content {
+      flex: 1;
+      overflow-y: auto;
+      margin: 0 19px;
+      padding: 19px 9px 10px;
+      border-radius: 11px;
+      background: #fff;
+      box-shadow: 0 5px 13px rgba(26,20,38,.08);
+    }
+    .spot-screen-label { display: none; }
+    .spot-seat-grid-wrap { display: flex; padding: 0 0 6px; gap: 4px; }
+    .spot-row-labels { display: flex; flex-direction: column; gap: 4px; padding-top: 1px; }
+    .spot-row-label { height: 18px; width: 16px; font-size: 10px; color: #55505a; display: flex; align-items: center; justify-content: center; }
+    .spot-seat-grid { flex: 1; display: flex; flex-direction: column; gap: 4px; }
+    .spot-seat-row { display: flex; gap: 3px; justify-content: center; }
+    .ss { width: 17px; height: 17px; border-radius: 4px; flex-shrink: 0; cursor: pointer; transition: transform .1s ease, background .12s ease, border-color .12s ease; }
+    .ss:active:not(.rv) { transform: scale(.82); }
+    .ss.av { background: #e8e8e8; border: 1px solid #ddd; }
+    .ss.av:hover { background: #ddd8f8; border-color: #5B2BD6; }
+    .ss.rv { background: #ccc; border: 1px solid #bbb; cursor: default; }
+    .ss.sl { background: #6f31de; border: 1px solid #6f31de; box-shadow: inset 0 0 0 1px rgba(255,255,255,.34); }
+    .ss.gp { background: transparent; border: none; cursor: default; width: 10px; }
+    .spot-seat-legend { display: flex; justify-content: center; gap: 16px; padding: 9px 0 0; background: #fff; border-top: 0; }
+    .spot-seat-legend span { display: flex; align-items: center; gap: 5px; font-size: 10px; color: #4f4a54; }
+    .spot-seat-legend i { width: 12px; height: 12px; border-radius: 2px; display: inline-block; }
+    .leg-av { background: #e8e8e8; border: 1px solid #ddd; }
+    .leg-sl { background: #5B2BD6; }
+    .leg-rv { background: #ccc; border: 1px solid #bbb; }
+    .spot-seat-bottom { flex-shrink: 0; background: #f6f6f6; border-top: 0; padding: 11px 20px 116px; }
+    .spot-seat-summary { display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px; }
+    .spot-seat-labels { font-size: 16px; color: #7030e8; font-weight: 800; }
+    .spot-seat-price { font-size: 17px; font-weight: 800; color: #161219; }
+    .spot-checkout-btn { width: 100%; background: linear-gradient(100deg, #c019df, #2500ff); color: #fff; border: none; border-radius: 9px; padding: 14px; font-size: 16px; font-weight: 800; cursor: pointer; transition: transform .15s ease, background .15s ease; position: relative; overflow: hidden; }
+    .spot-checkout-btn:active { transform: scale(.96); background: #4a23b5; }
+    .spot-checkout-btn.loading { background: #4a23b5; cursor: not-allowed; }
+    .spot-checkout-btn .btn-text { transition: opacity .15s ease; }
+    .spot-checkout-btn.loading .btn-text { opacity: 0; }
+    .spot-checkout-btn .btn-spinner { display: none; width: 20px; height: 20px; border: 2.5px solid rgba(255,255,255,.35); border-top-color: #fff; border-radius: 50%; position: absolute; left: 50%; top: 50%; transform: translate(-50%, -50%); animation: spot-spin .7s linear infinite; }
+    .spot-checkout-btn.loading .btn-spinner { display: block; }
+    @keyframes spot-spin { to { transform: translate(-50%, -50%) rotate(360deg); } }
+    .spot-seat-screen .home-nav { background: rgba(255,255,255,.98); border-top: 1px solid #ebebeb; box-shadow: 0 -4px 14px rgba(0,0,0,.06); }
+    .spot-seat-screen .home-nav-btn { color: #888; }
+    .spot-seat-screen .home-nav-btn.active svg { fill: #111; stroke: #111; }
+
+    /* ── Payment modal (FAST MODE) ──────────────────────── */
+    #spot-payment-modal { position: absolute; inset: 0; z-index: 50; background: rgba(0,0,0,.46); display: flex; align-items: center; justify-content: center; opacity: 0; visibility: hidden; transition: opacity .28s ease, visibility .28s; backdrop-filter: blur(2px); }
+    #spot-payment-modal.active { opacity: 1; visibility: visible; }
+    .spot-payment-dialog { background: #fff; border-radius: 22px; padding: 32px 28px 28px; text-align: center; width: 272px; box-shadow: 0 24px 64px rgba(0,0,0,.28); transform: scale(.86) translateY(24px); transition: transform .34s cubic-bezier(.16,.78,.18,1); }
+    #spot-payment-modal.active .spot-payment-dialog { transform: scale(1) translateY(0); }
+    .spot-payment-check { width: 58px; height: 58px; border-radius: 50%; background: #5B2BD6; display: flex; align-items: center; justify-content: center; margin: 0 auto 18px; }
+    #spot-payment-modal.active .spot-payment-check { animation: spot-pop-in .42s .06s cubic-bezier(.16,.78,.18,1) both; }
+    @keyframes spot-pop-in { 0% { transform: scale(0); opacity: 0; } 60% { transform: scale(1.18); opacity: 1; } 100% { transform: scale(1); opacity: 1; } }
+    .spot-payment-check svg { width: 28px; height: 28px; stroke: #fff; fill: none; stroke-width: 2.5; stroke-linecap: round; stroke-linejoin: round; }
+    .spot-payment-title { font-size: 19px; font-weight: 800; color: #111; margin: 0 0 8px; letter-spacing: -.02em; }
+    .spot-payment-sub { font-size: 13px; color: #888; margin: 0 0 26px; line-height: 1.55; }
+    .spot-payment-close { width: 100%; background: #5B2BD6; color: #fff; border: none; border-radius: 12px; padding: 13px; font-size: 14px; font-weight: 700; cursor: pointer; transition: background .15s ease; }
+    .spot-payment-close:active { background: #4a23b5; }
+
+    /* ── FAST MODE screen content animations ──────────────────────── */
+    .screen.screen-entering > .spot-topbar,
+    .screen.screen-entering > .spot-dates,
+    .screen.screen-entering-back > .spot-topbar,
+    .screen.screen-entering-back > .spot-dates,
+    .screen.screen-entering > .spot-seat-topbar,
+    .screen.screen-entering > .spot-progress,
+    .screen.screen-entering-back > .spot-seat-topbar,
+    .screen.screen-entering-back > .spot-progress { animation: screen-content-rise .48s .08s ease both; }
+    .screen.screen-entering > .spot-scroll,
+    .screen.screen-entering > .spot-seat-movie-info,
+    .screen.screen-entering > .spot-seat-content,
+    .screen.screen-entering-back > .spot-scroll,
+    .screen.screen-entering-back > .spot-seat-movie-info,
+    .screen.screen-entering-back > .spot-seat-content { animation: screen-content-rise .56s .14s cubic-bezier(.16,.78,.18,1) both; }
+
+    /* Figma exact FAST MODE frames */
+    .phone-shell:has(.home-screen.active) > .status-bar,
+    .phone-shell:has(.spot-screen.active) > .status-bar,
+    .phone-shell:has(.spot-seat-screen.active) > .status-bar {
+      opacity: 0;
+    }
+
+    .phone-shell:has(.home-screen.active) > .toast,
+    .phone-shell:has(.spot-screen.active) > .toast,
+    .phone-shell:has(.spot-seat-screen.active) > .toast {
+      display: none;
+    }
+
+    .home-screen {
+      background: #fff url("../img/figma/fast-home-exact.png") center / 100% 100% no-repeat;
+    }
+
+    .spot-screen {
+      background: #fff url("../img/figma/fast-spot-exact.png") center / 100% 100% no-repeat;
+    }
+
+    .spot-seat-screen {
+      background: #fff url("../img/figma/fast-seat-exact.png") center / 100% 100% no-repeat;
+    }
+
+    .home-screen > .home-header,
+    .home-screen > .home-content,
+    .home-screen > .home-nav,
+    .spot-screen > .spot-topbar,
+    .spot-screen > .spot-dates,
+    .spot-screen > .spot-scroll,
+    .spot-screen > .home-nav,
+    .spot-seat-screen > .spot-seat-topbar,
+    .spot-seat-screen > .spot-progress,
+    .spot-seat-screen > .spot-seat-movie-info,
+    .spot-seat-screen > .spot-seat-content,
+    .spot-seat-screen > .spot-seat-bottom,
+    .spot-seat-screen > .home-nav {
+      opacity: 0 !important;
+      animation: none !important;
+    }
   </style>
 </head>
 <body>
@@ -1931,11 +2297,12 @@
             <strong>강남</strong>
             <small>1.2km</small>
             <span class="format-tags"><span>IMAX</span><span>DOLBY</span><span>4DX</span></span>
+            <svg class="district-chevron" viewBox="0 0 24 24"><path d="m9 5 7 7-7 7"/></svg>
           </button>
           <button class="map-card" type="button" data-toast="지도 보기를 준비하고 있습니다.">
             <span>
               <svg class="pin-icon" viewBox="0 0 24 30"><path d="M12 29S2 18.2 2 10.5C2 4.7 6.5 1 12 1s10 3.7 10 9.5C22 18.2 12 29 12 29Z"/><circle cx="12" cy="10.5" r="3.4" fill="#fff"/></svg>
-              <br>지도보기
+              지도 보기
             </span>
           </button>
         </div>
@@ -1946,9 +2313,9 @@
         </div>
 
         <div class="favorite-list">
-          <button class="favorite-row" type="button" data-toast="코엑스 극장을 선택했습니다."><strong>코엑스</strong><span>2.3km</span><svg class="chevron" viewBox="0 0 24 24"><path d="m9 5 7 7-7 7"/></svg></button>
-          <button class="favorite-row" type="button" data-toast="신촌 극장을 선택했습니다."><strong>신촌</strong><span>4.1km</span><svg class="chevron" viewBox="0 0 24 24"><path d="m9 5 7 7-7 7"/></svg></button>
-          <button class="favorite-row" type="button" data-toast="수원 스타필드 극장을 선택했습니다."><strong>수원 스타필드</strong><span>16.2km</span><svg class="chevron" viewBox="0 0 24 24"><path d="m9 5 7 7-7 7"/></svg></button>
+          <button class="favorite-row selected" type="button" data-toast="코엑스 극장을 선택했습니다."><strong>코엑스</strong><span>2.3km</span><i class="favorite-benefit" aria-hidden="true"></i></button>
+          <button class="favorite-row" type="button" data-toast="신촌 극장을 선택했습니다."><strong>신촌</strong><span>4.1km</span><i class="favorite-benefit" aria-hidden="true"></i></button>
+          <button class="favorite-row" type="button" data-toast="수원 스타필드 극장을 선택했습니다."><strong>수원 스타필드</strong><span>16.2km</span><i class="favorite-benefit" aria-hidden="true"></i></button>
         </div>
 
         <button class="all-theaters" type="button" data-toast="전체 극장 목록을 준비하고 있습니다.">극장 전체보기</button>
@@ -1956,15 +2323,170 @@
 
       <nav class="home-nav" aria-label="메가박스 하단 메뉴">
         <button class="home-nav-btn active" type="button" data-toast="현재 홈 화면입니다.">
-          <svg viewBox="0 0 24 24"><path d="m4 10 8-7 8 7v10h-6v-6h-4v6H4z"/></svg>
+          <svg viewBox="0 0 24 24"><path d="M3 10.5L12 3l9 7.5V21H3zM12 12l2.5 3-2.5 3-2.5-3z" fill-rule="evenodd"/></svg>
           홈
         </button>
-        <button class="mega-mode-btn" id="mega-mode-btn" type="button" aria-label="메가 모드 시작">MEGA<br>MODE</button>
+        <button class="mega-mode-btn" id="mega-mode-btn" type="button" aria-label="메가 모드 시작">MGEA<br>MODE</button>
         <button class="home-nav-btn" type="button" data-toast="모바일오더를 준비하고 있습니다.">
-          <svg viewBox="0 0 24 24"><path d="M7 8h10l1 12H6L7 8Z"/><path d="M9 8a3 3 0 0 1 6 0M8 4h8"/></svg>
+          <svg viewBox="0 0 24 24"><circle cx="9" cy="8.5" r="2"/><circle cx="12" cy="7.5" r="2"/><circle cx="15" cy="8.5" r="2"/><path d="M7.5 10.5h9l-1.5 9.5h-6z"/><circle cx="12" cy="15" r="1.5"/><path d="M10.5 10.5L11 20M13.5 10.5L13 20"/></svg>
           모바일오더
         </button>
       </nav>
+    </section>
+
+    <section class="screen spot-screen" id="spot-screen" aria-label="극장 상영 목록">
+      <header class="spot-topbar">
+        <span class="spot-brand">spot</span>
+        <button class="icon-btn" type="button" aria-label="알림" data-toast="알림이 없습니다.">
+          <svg viewBox="0 0 24 24" width="22" height="22"><path d="M6 10a6 6 0 1 1 12 0v3l2 3H4l2-3v-3zM10 19a2 2 0 0 0 4 0"/></svg>
+        </button>
+      </header>
+
+      <div class="spot-dates">
+        <button class="spot-date active" type="button"><span class="spot-date-today">오늘</span><span>05.20</span></button>
+        <button class="spot-date" type="button"><span>05.21</span></button>
+        <button class="spot-date" type="button"><span>05.22</span></button>
+        <button class="spot-date" type="button"><span>05.23</span></button>
+        <button class="spot-date" type="button"><span>05.24</span></button>
+      </div>
+
+      <div class="spot-scroll">
+        <p class="spot-section-label">상영중인 영화</p>
+        <div class="spot-movie">
+          <img class="spot-poster" src="../img/인터스텔라.png" alt="군체 포스터">
+          <div class="spot-info">
+            <div class="spot-movie-header">
+              <span class="spot-title">군체</span>
+              <svg class="spot-arrow" viewBox="0 0 24 24" width="16" height="16"><path d="m9 5 7 7-7 7"/></svg>
+            </div>
+            <div class="spot-tag"><span class="spot-tag-age">15</span><span class="spot-tag-genre">Action</span></div>
+            <div class="spot-times">
+              <button class="spot-time-btn selected" type="button">10:30</button>
+              <button class="spot-time-btn" type="button">11:30</button>
+              <button class="spot-time-btn" type="button">12:10</button>
+              <button class="spot-time-btn" type="button">19:30</button>
+            </div>
+          </div>
+        </div>
+        <div class="spot-movie">
+          <img class="spot-poster" src="../img/닥터스트레인지.jpg" alt="백룸 포스터">
+          <div class="spot-info">
+            <div class="spot-movie-header">
+              <span class="spot-title">백룸</span>
+              <svg class="spot-arrow" viewBox="0 0 24 24" width="16" height="16"><path d="m9 5 7 7-7 7"/></svg>
+            </div>
+            <div class="spot-tag"><span class="spot-tag-age">15</span><span class="spot-tag-genre">Thriller</span></div>
+            <div class="spot-times">
+              <button class="spot-time-btn" type="button">10:30</button>
+              <button class="spot-time-btn selected" type="button">11:30</button>
+              <button class="spot-time-btn" type="button">12:10</button>
+              <button class="spot-time-btn" type="button">19:30</button>
+            </div>
+          </div>
+        </div>
+        <div class="spot-movie">
+          <img class="spot-poster" src="../img/라이프.jpg" alt="만달로리안과 그로구 포스터">
+          <div class="spot-info">
+            <div class="spot-movie-header">
+              <span class="spot-title">만달로리안과 그로구</span>
+              <svg class="spot-arrow" viewBox="0 0 24 24" width="16" height="16"><path d="m9 5 7 7-7 7"/></svg>
+            </div>
+            <div class="spot-tag"><span class="spot-tag-age">15</span><span class="spot-tag-genre">Thriller</span></div>
+            <div class="spot-times">
+              <button class="spot-time-btn" type="button">10:30</button>
+              <button class="spot-time-btn" type="button">11:30</button>
+              <button class="spot-time-btn selected" type="button">12:10</button>
+              <button class="spot-time-btn" type="button">19:30</button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <nav class="home-nav" aria-label="하단 메뉴">
+        <button class="home-nav-btn spot-home-btn" type="button">
+          <svg viewBox="0 0 24 24"><path d="M3 10.5L12 3l9 7.5V21H3zM12 12l2.5 3-2.5 3-2.5-3z" fill-rule="evenodd"/></svg>
+          홈
+        </button>
+        <button class="mega-mode-btn" id="spot-mega-btn" type="button" aria-label="메가 모드 시작">MGEA<br>MODE</button>
+        <button class="home-nav-btn" type="button" data-toast="모바일오더를 준비하고 있습니다.">
+          <svg viewBox="0 0 24 24"><circle cx="9" cy="8.5" r="2"/><circle cx="12" cy="7.5" r="2"/><circle cx="15" cy="8.5" r="2"/><path d="M7.5 10.5h9l-1.5 9.5h-6z"/><circle cx="12" cy="15" r="1.5"/><path d="M10.5 10.5L11 20M13.5 10.5L13 20"/></svg>
+          모바일오더
+        </button>
+      </nav>
+    </section>
+
+    <section class="screen spot-seat-screen" id="spot-seat-screen" aria-label="좌석 선택">
+      <header class="spot-seat-topbar">
+        <button class="icon-btn" id="spot-seat-back" type="button" aria-label="뒤로 가기">
+          <svg viewBox="0 0 24 24" width="22" height="22"><path d="m15 18-6-6 6-6"/></svg>
+        </button>
+        <span class="spot-seat-header-title">좌석선택</span>
+      </header>
+
+      <div class="spot-progress">
+        <span class="spot-step done">극장</span>
+        <span class="spot-step-sep">─</span>
+        <span class="spot-step done">영화/시간</span>
+        <span class="spot-step-sep">─</span>
+        <span class="spot-step active">좌석</span>
+        <span class="spot-step-sep">─</span>
+        <span class="spot-step">결제</span>
+      </div>
+
+      <div class="spot-seat-movie-info">
+        <img class="spot-seat-poster" src="../img/인터스텔라.png" alt="군체">
+        <div>
+          <div class="spot-seat-movie-name">군체</div>
+          <div class="spot-seat-meta">강남 / 4관 · 2026.05.27 (수) 13:20</div>
+        </div>
+      </div>
+
+      <div class="spot-seat-content">
+        <p class="spot-screen-label">SCREEN</p>
+        <div class="spot-seat-grid-wrap">
+          <div class="spot-row-labels" id="spot-row-labels"></div>
+          <div class="spot-seat-grid" id="spot-seat-map"></div>
+        </div>
+        <div class="spot-seat-legend">
+          <span><i class="leg-av"></i>선택가능</span>
+          <span><i class="leg-sl"></i>선택됨</span>
+          <span><i class="leg-rv"></i>예매완료</span>
+        </div>
+      </div>
+
+      <div class="spot-seat-bottom">
+        <div class="spot-seat-summary">
+          <span class="spot-seat-labels">E7, E8 &nbsp;총 2석</span>
+          <span class="spot-seat-price">28,000원</span>
+        </div>
+        <button class="spot-checkout-btn" type="button" id="spot-checkout-btn">
+          <span class="btn-text">결제하기</span>
+          <span class="btn-spinner"></span>
+        </button>
+      </div>
+
+      <nav class="home-nav" aria-label="하단 메뉴">
+        <button class="home-nav-btn spot-seat-home-btn" type="button">
+          <svg viewBox="0 0 24 24"><path d="M3 10.5L12 3l9 7.5V21H3zM12 12l2.5 3-2.5 3-2.5-3z" fill-rule="evenodd"/></svg>
+          홈
+        </button>
+        <button class="mega-mode-btn" id="spot-seat-mega-btn" type="button" aria-label="메가 모드 시작">MGEA<br>MODE</button>
+        <button class="home-nav-btn" type="button" data-toast="모바일오더를 준비하고 있습니다.">
+          <svg viewBox="0 0 24 24"><circle cx="9" cy="8.5" r="2"/><circle cx="12" cy="7.5" r="2"/><circle cx="15" cy="8.5" r="2"/><path d="M7.5 10.5h9l-1.5 9.5h-6z"/><circle cx="12" cy="15" r="1.5"/><path d="M10.5 10.5L11 20M13.5 10.5L13 20"/></svg>
+          모바일오더
+        </button>
+      </nav>
+
+      <div id="spot-payment-modal" role="dialog" aria-modal="true" aria-label="결제 완료">
+        <div class="spot-payment-dialog">
+          <div class="spot-payment-check">
+            <svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg>
+          </div>
+          <p class="spot-payment-title">결제되었습니다</p>
+          <p class="spot-payment-sub">E7, E8 · 총 2석<br>28,000원이 결제되었습니다.</p>
+          <button class="spot-payment-close" type="button">확인</button>
+        </div>
+      </div>
     </section>
 
     <section class="screen movie-screen" id="movie-screen" aria-label="영화 선택">
@@ -2142,6 +2664,6 @@
     <div class="toast" id="toast" role="status"></div>
   </main>
 
-  <script type="module" src="../main.js/main.js?v=38"></script>
+  <script type="module" src="../main.js/main.js?v=48"></script>
 </body>
 </html>

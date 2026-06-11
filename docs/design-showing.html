@@ -1,0 +1,1500 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=1920">
+  <title>MEGABOX UI UX RENEWAL — 김우성</title>
+  <link rel="preconnect" href="https://cdn.jsdelivr.net">
+  <link href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.css" rel="stylesheet">
+  <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    html, body { background: #000; }
+    body {
+      width: 1920px;
+      font-family: 'Pretendard', -apple-system, 'Malgun Gothic', sans-serif;
+      overflow-x: hidden;
+    }
+    section { position: relative; width: 1920px; overflow: hidden; }
+
+    /* ─── NAVBAR ──────────────────────────────────────────────── */
+    .s-nav {
+      height: 322px;
+      background: #000;
+    }
+    .s-nav .nav-inner {
+      position: absolute;
+      top: 65px;
+      left: 0; right: 0;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0 176px 0 176px;
+    }
+    .s-nav .nav-logo { font-size: 14px; font-weight: 400; color: #fff; letter-spacing: .08em; }
+    .s-nav .nav-center { position: absolute; left: 50%; transform: translateX(-50%); font-size: 14px; font-weight: 400; color: #fff; letter-spacing: .08em; }
+    .s-nav .nav-right { margin-left: auto; font-size: 14px; font-weight: 400; color: #fff; letter-spacing: .08em; }
+
+    /* ─── HERO ────────────────────────────────────────────────── */
+    .s-hero {
+      height: 1081px;
+      background: url('../img/ds-hero-bg.jpg') center center / cover no-repeat;
+    }
+    .s-hero .hero-text {
+      position: absolute;
+      left: 176px;
+      top: 374px;
+    }
+    .s-hero .hero-en {
+      font-size: 24px;
+      font-weight: 500;
+      color: #fff;
+      letter-spacing: .01em;
+      line-height: 1.4;
+    }
+    .s-hero .hero-ko {
+      margin-top: 10px;
+      font-size: 20px;
+      font-weight: 400;
+      color: rgba(245,245,245,1);
+      letter-spacing: .01em;
+    }
+
+    /* ─── MEET PLAY SHARE ─────────────────────────────────────── */
+    .s-meet {
+      height: 2566px;
+      background: #000;
+    }
+    .s-meet .gradient-bar {
+      position: absolute;
+      top: 0; left: 0; right: 0;
+      height: 244px;
+      background: linear-gradient(135deg, #17072800 0%, #0b071400 50%, #130821 100%);
+      opacity: .84;
+    }
+    .s-meet .main-title {
+      position: absolute;
+      top: 297px;
+      left: 152px;
+      font-size: 128px;
+      font-weight: 700;
+      color: #fff;
+      letter-spacing: -.02em;
+      line-height: 1.4;
+      white-space: nowrap;
+    }
+    .s-meet .main-desc {
+      position: absolute;
+      top: 610px;
+      left: 152px;
+      width: 719px;
+      font-size: 24px;
+      font-weight: 400;
+      color: #fff;
+      line-height: 1.7;
+    }
+    .s-meet .app-preview {
+      position: absolute;
+      top: 846px;
+      left: 526px;
+      width: 868px;
+      height: 1503px;
+      object-fit: cover;
+    }
+
+    /* ─── APPLICATION REVIEW ─────────────────────────────────── */
+    .s-apprev {
+      height: 1972px;
+      background: #000;
+    }
+    .s-apprev .bg-img {
+      position: absolute;
+      top: 1px; left: 0;
+      width: 1920px;
+      height: 1537px;
+      object-fit: cover;
+      filter: saturate(1.36) brightness(0.4);
+    }
+    .s-apprev .overlay {
+      position: absolute;
+      top: 0; left: 0; right: 0; bottom: 0;
+      background: linear-gradient(180deg, rgba(0,0,0,.55) 0%, rgba(0,0,0,.28) 50%, rgba(0,0,0,.82) 90%);
+    }
+    .s-apprev .rev-title {
+      position: absolute;
+      top: 106px;
+      left: 658px;
+      font-size: 128px;
+      font-weight: 700;
+      color: #fff;
+      letter-spacing: -.02em;
+      line-height: 1.4;
+    }
+    .s-apprev .rev-desc {
+      position: absolute;
+      top: 437px;
+      left: 1049px;
+      width: 719px;
+      font-size: 24px;
+      font-weight: 400;
+      color: #fff;
+      line-height: 1.7;
+    }
+
+    /* ─── USER REVIEW TICKETS ────────────────────────────────── */
+    .s-tickets {
+      height: 1480px;
+      background: #000;
+    }
+    .ticket-grid {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 1920px;
+      display: flex;
+      gap: 0;
+    }
+    .ticket-col {
+      flex: 1;
+      padding: 0 40px;
+      display: flex;
+      flex-direction: column;
+      gap: 28px;
+    }
+    .ticket-card {
+      border-radius: 16px;
+      padding: 52px 48px 42px;
+      background: linear-gradient(145deg, rgba(23,11,64,.96), rgba(11,7,20,.98));
+      position: relative;
+      overflow: hidden;
+    }
+    .ticket-card::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      border-radius: 16px;
+      border: 1px solid rgba(139,61,255,.28);
+      pointer-events: none;
+    }
+    .ticket-meta-row {
+      display: flex;
+      align-items: flex-start;
+      justify-content: space-between;
+      margin-bottom: 24px;
+    }
+    .ticket-user-id {
+      font-size: 22px;
+      font-weight: 600;
+      color: rgba(139,61,255,1);
+      letter-spacing: .04em;
+    }
+    .ticket-brand {
+      font-size: 20px;
+      font-weight: 600;
+      color: rgba(139,61,255,1);
+      letter-spacing: .04em;
+    }
+    .ticket-quote {
+      font-size: 28px;
+      font-weight: 600;
+      color: #fff;
+      line-height: 1.55;
+      margin-bottom: 32px;
+    }
+    /* divider lines inside ticket */
+    .ticket-divider {
+      border: none;
+      border-top: 1px solid rgba(66,39,129,.6);
+      margin: 14px 0;
+    }
+    .ticket-fields {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 4px 0;
+    }
+    .ticket-field-label {
+      font-size: 15px;
+      font-weight: 600;
+      color: rgba(66,39,129,1);
+      letter-spacing: .06em;
+    }
+    .ticket-field-value {
+      font-size: 15px;
+      font-weight: 600;
+      color: #fff;
+    }
+    .ticket-bottom-row {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-top: 14px;
+    }
+    .ticket-movie-label, .ticket-code {
+      font-size: 15px;
+      font-weight: 600;
+      color: rgba(66,39,129,1);
+      letter-spacing: .06em;
+    }
+    /* barcode SVG strip */
+    .ticket-barcode {
+      width: 100%;
+      height: 57px;
+      margin-top: 10px;
+    }
+    /* big quote mark */
+    .big-quote {
+      font-size: 72px;
+      font-weight: 400;
+      color: rgba(139,61,255,1);
+      line-height: 1;
+      position: absolute;
+      right: 48px;
+      top: 48px;
+    }
+
+    /* ─── ANALYSIS HEADING BRIDGE ─────────────────────────────── */
+    .s-analysis-head {
+      height: 450px;
+      background: #f2f2f2;
+      display: flex;
+      align-items: center;
+    }
+    .s-analysis-head .head-title {
+      position: absolute;
+      top: 168px;
+      left: 148px;
+      font-size: 63px;
+      font-weight: 700;
+      color: #000;
+      line-height: 1.3;
+    }
+
+    /* ─── ANALYSIS / PAIN POINTS ─────────────────────────────── */
+    .s-analysis {
+      min-height: 2871px;
+      background: #f2f2f2;
+    }
+    .pain-block {
+      position: relative;
+      padding: 80px 0 80px;
+    }
+    .pain-block + .pain-block {
+      border-top: 1px solid rgba(0,0,0,.08);
+    }
+    .pain-title {
+      font-size: 40px;
+      font-weight: 500;
+      color: #000;
+      letter-spacing: -.01em;
+      margin-bottom: 18px;
+    }
+    .pain-body {
+      font-size: 24px;
+      font-weight: 400;
+      color: #000;
+      line-height: 1.65;
+      max-width: 560px;
+    }
+    .pain-tag {
+      display: inline-block;
+      margin-top: 32px;
+      font-size: 40px;
+      font-weight: 500;
+      color: #000;
+    }
+    .pain-core-desc {
+      font-size: 24px;
+      font-weight: 400;
+      color: #000;
+      line-height: 1.55;
+      max-width: 526px;
+    }
+    .pain-screens {
+      display: flex;
+      gap: 32px;
+    }
+    .pain-screen-img {
+      width: 274px;
+      height: 595px;
+      object-fit: cover;
+      border-radius: 12px;
+    }
+    .pain-layout {
+      display: grid;
+      grid-template-columns: 357px 1fr 274px 274px;
+      column-gap: 32px;
+      align-items: start;
+      padding: 0 152px;
+      margin-bottom: 80px;
+    }
+    .pain-layout-2 {
+      display: grid;
+      grid-template-columns: 357px 1fr 274px 274px;
+      column-gap: 32px;
+      align-items: start;
+      padding: 0 152px;
+      margin-top: 40px;
+    }
+    .pain-stacked-screens {
+      display: flex;
+      flex-direction: column;
+      gap: 0;
+    }
+    .pain-stacked-screens img:nth-child(1) { height: 493px; object-fit: cover; border-radius: 12px 12px 0 0; }
+    .pain-stacked-screens img:nth-child(2) { height: 389px; object-fit: cover; }
+    .pain-stacked-screens img:nth-child(3) { height: 212px; object-fit: cover; }
+    .pain-stacked-screens img:nth-child(4) { height: 155px; object-fit: cover; border-radius: 0 0 12px 12px; }
+
+    /* ─── USER PERSONA ──────────────────────────────────────── */
+    .s-persona {
+      min-height: 3367px;
+      background: #05030e;
+    }
+    .persona-header {
+      padding: 230px 152px 0;
+    }
+    .persona-hero-title {
+      font-size: 128px;
+      font-weight: 700;
+      color: #fff;
+      letter-spacing: -.03em;
+      line-height: 1.1;
+    }
+    .persona-hero-desc {
+      margin-top: 48px;
+      font-size: 24px;
+      font-weight: 400;
+      color: #fff;
+      line-height: 1.7;
+      max-width: 642px;
+    }
+    .persona-cards {
+      margin-top: 160px;
+      padding: 0 152px;
+      display: flex;
+      flex-direction: column;
+      gap: 0;
+    }
+    .persona-card {
+      display: grid;
+      grid-template-columns: 580px 1fr;
+      gap: 0;
+      padding: 80px 0;
+      border-top: 1px solid rgba(255,255,255,.1);
+    }
+    .persona-card:last-child { border-bottom: 1px solid rgba(255,255,255,.1); }
+    .persona-left {
+      display: flex;
+      flex-direction: column;
+      justify-content: flex-start;
+      padding-right: 60px;
+    }
+    .persona-user-id {
+      font-size: 55px;
+      font-weight: 700;
+      color: rgba(179,149,255,1);
+      letter-spacing: .02em;
+      margin-bottom: 40px;
+    }
+    .persona-name-row {
+      display: flex;
+      align-items: baseline;
+      gap: 10px;
+    }
+    .persona-name {
+      font-size: 35px;
+      font-weight: 600;
+      color: #fff;
+    }
+    .persona-age {
+      font-size: 23px;
+      font-weight: 300;
+      color: rgba(216,202,254,1);
+    }
+    .persona-role {
+      margin-top: 6px;
+      font-size: 24px;
+      font-weight: 400;
+      color: rgba(139,61,255,1);
+    }
+    .persona-right {
+      padding-left: 40px;
+      position: relative;
+    }
+    .persona-section-label {
+      font-size: 30px;
+      font-weight: 700;
+      color: rgba(91,43,214,1);
+      letter-spacing: .04em;
+      margin-bottom: 14px;
+    }
+    .persona-goal-text {
+      font-size: 36px;
+      font-weight: 600;
+      color: #fff;
+      line-height: 1.5;
+      margin-bottom: 52px;
+      max-width: 527px;
+    }
+    .persona-list {
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+      margin-bottom: 48px;
+    }
+    .persona-list li {
+      font-size: 20px;
+      font-weight: 400;
+      color: #fff;
+      list-style: none;
+      padding-left: 18px;
+      position: relative;
+    }
+    .persona-list li::before {
+      content: '—';
+      position: absolute;
+      left: 0;
+      color: rgba(139,61,255,.7);
+    }
+    .persona-quote {
+      position: absolute;
+      right: 0;
+      top: 0;
+      font-size: 71px;
+      font-weight: 400;
+      color: rgba(139,61,255,1);
+      line-height: 1;
+    }
+
+    /* ─── JOURNEY MAP ────────────────────────────────────────── */
+    .s-journey {
+      min-height: 1256px;
+      background: #05030e;
+    }
+    .journey-inner {
+      padding: 0 152px;
+    }
+    .journey-title {
+      font-size: 64px;
+      font-weight: 700;
+      color: #fff;
+      letter-spacing: -.02em;
+      padding-top: 0;
+      margin-bottom: 120px;
+    }
+    .journey-table {
+      width: 100%;
+      border-collapse: collapse;
+    }
+    .journey-table th {
+      font-size: 20px;
+      font-weight: 700;
+      color: #fff;
+      text-align: left;
+      padding: 18px 16px;
+      border-bottom: 1px solid rgba(255,255,255,.12);
+    }
+    .journey-table td {
+      font-size: 15px;
+      font-weight: 400;
+      color: rgba(255,255,255,.82);
+      padding: 16px;
+      border-bottom: 1px solid rgba(255,255,255,.06);
+      vertical-align: top;
+      line-height: 1.55;
+    }
+    .journey-stage-dot {
+      display: inline-block;
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      background: rgba(139,61,255,.8);
+      margin-right: 8px;
+      vertical-align: middle;
+    }
+
+    /* ─── FUTURE IMPROVEMENTS ────────────────────────────────── */
+    .s-future {
+      min-height: 1778px;
+      background: #05030e;
+      padding: 0 152px;
+    }
+    .future-title {
+      font-size: 96px;
+      font-weight: 600;
+      color: #fff;
+      letter-spacing: -.02em;
+      padding-top: 0;
+      margin-bottom: 48px;
+      padding-top: 0;
+    }
+    .future-desc {
+      font-size: 32px;
+      font-weight: 400;
+      color: #fff;
+      line-height: 1.6;
+      max-width: 1197px;
+      margin-bottom: 80px;
+    }
+    .future-items {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 40px;
+      margin-bottom: 80px;
+    }
+    .future-item-title {
+      font-size: 40px;
+      font-weight: 400;
+      color: #fff;
+      line-height: 1.4;
+      margin-bottom: 14px;
+    }
+    .future-item-desc {
+      font-size: 20px;
+      font-weight: 400;
+      color: #fff;
+      line-height: 1.6;
+      opacity: .8;
+    }
+    .future-circles {
+      display: flex;
+      justify-content: space-between;
+      gap: 40px;
+    }
+    .future-circle-wrap {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 24px;
+    }
+    .future-circle {
+      width: 474px;
+      height: 474px;
+      border-radius: 50%;
+      border: 1.5px solid rgba(139,61,255,.4);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      padding: 48px;
+      background: radial-gradient(circle at 50% 40%, rgba(139,61,255,.06), transparent 70%);
+    }
+    .future-circle-label {
+      font-size: 35px;
+      font-weight: 600;
+      color: #fff;
+      line-height: 1.3;
+      text-align: center;
+      margin-bottom: 14px;
+    }
+    .future-circle-desc {
+      font-size: 20px;
+      font-weight: 400;
+      color: rgba(255,255,255,.75);
+      line-height: 1.55;
+      text-align: center;
+    }
+
+    /* ─── DESIGN ELEMENTS ────────────────────────────────────── */
+    .s-design {
+      min-height: 1772px;
+      background: #05030e;
+      overflow: hidden;
+    }
+    .design-inner {
+      position: relative;
+      padding: 0 157px;
+    }
+    .design-hero-title {
+      position: absolute;
+      top: 0;
+      right: 157px;
+      font-size: 128px;
+      font-weight: 700;
+      color: #fff;
+      letter-spacing: -.03em;
+      line-height: 1.1;
+      text-align: right;
+    }
+    .design-aa {
+      font-size: 476px;
+      font-weight: 700;
+      color: #fff;
+      line-height: .88;
+      letter-spacing: -.05em;
+    }
+    .design-meta-row {
+      display: grid;
+      grid-template-columns: 1fr 1fr 1fr;
+      gap: 40px;
+      margin-top: 60px;
+      padding-bottom: 80px;
+    }
+    .design-meta-section h3 {
+      font-size: 33px;
+      font-weight: 700;
+      color: #fff;
+      letter-spacing: .04em;
+      margin-bottom: 10px;
+    }
+    .design-meta-section p {
+      font-size: 33px;
+      font-weight: 400;
+      color: #fff;
+      letter-spacing: .02em;
+    }
+    .color-swatch-row {
+      display: flex;
+      gap: 60px;
+      margin-top: 0;
+      align-items: flex-start;
+    }
+    .color-swatch {
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+    }
+    .swatch-box {
+      width: 220px;
+      height: 80px;
+      border-radius: 10px;
+    }
+    .swatch-name {
+      font-size: 25px;
+      font-weight: 700;
+      color: #fff;
+    }
+    .swatch-hex {
+      font-size: 25px;
+      font-weight: 400;
+      color: #fff;
+    }
+
+    /* ─── WIREFRAME / CONTENTS ───────────────────────────────── */
+    .s-wireframe {
+      min-height: 1937px;
+      background: #f2f2f2;
+    }
+    .wireframe-inner {
+      padding: 0 157px;
+    }
+    .wireframe-main-title {
+      font-size: 128px;
+      font-weight: 700;
+      color: #000;
+      letter-spacing: -.03em;
+      line-height: 1.1;
+      padding-top: 234px;
+    }
+    .wireframe-subtitle {
+      position: absolute;
+      top: 485px;
+      right: 157px;
+      font-size: 40px;
+      font-weight: 500;
+      color: #000;
+    }
+    .wireframe-screens {
+      margin-top: 80px;
+      display: flex;
+      gap: 24px;
+      justify-content: center;
+      flex-wrap: wrap;
+    }
+    .wireframe-phone {
+      width: 267px;
+      border-radius: 24px;
+      overflow: hidden;
+      box-shadow: 0 8px 32px rgba(0,0,0,.12);
+    }
+    .wireframe-phone img {
+      width: 100%;
+      display: block;
+    }
+
+    /* ─── FINAL DARK: UI KIT / SCREENS ──────────────────────── */
+    .s-final {
+      min-height: 8900px;
+      background: linear-gradient(180deg, #0a0212 0%, #050308 30%, #000 100%);
+      padding: 0;
+    }
+    .final-divider {
+      width: 1920px;
+      height: 1px;
+      background: rgba(139,61,255,.18);
+    }
+    .uikit-section {
+      padding: 200px 152px 120px;
+    }
+    .uikit-title {
+      font-size: 128px;
+      font-weight: 500;
+      color: #fff;
+      letter-spacing: -.03em;
+      text-align: center;
+      margin-bottom: 64px;
+    }
+    .uikit-desc {
+      font-size: 32px;
+      font-weight: 400;
+      color: #fff;
+      line-height: 1.6;
+      max-width: 1197px;
+      margin: 0 auto 80px;
+      text-align: center;
+    }
+    .uikit-mode-row {
+      display: flex;
+      gap: 60px;
+      justify-content: center;
+      margin-top: 80px;
+      align-items: flex-start;
+    }
+    .uikit-mode-block {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 20px;
+    }
+    .uikit-mode-label {
+      font-size: 16px;
+      font-weight: 500;
+      color: #fff;
+      letter-spacing: .1em;
+      text-align: center;
+    }
+    .uikit-screen-img {
+      border-radius: 24px;
+      overflow: hidden;
+      box-shadow: 0 24px 64px rgba(0,0,0,.56), 0 0 30px rgba(139,61,255,.18);
+    }
+    .uikit-screen-img img {
+      display: block;
+    }
+    .uiflow-image {
+      display: block;
+      margin: 0 auto;
+      max-width: 1341px;
+      width: 100%;
+      border-radius: 16px;
+    }
+
+    /* SVG decorative lines */
+    .svg-deco {
+      position: absolute;
+      pointer-events: none;
+    }
+    .barcode-svg line {
+      stroke: rgba(139,61,255,.5);
+      stroke-width: 1;
+    }
+  </style>
+</head>
+<body>
+
+<!-- ════════════════════════════════════════════════
+     SECTION 1 · NAVBAR
+═══════════════════════════════════════════════════ -->
+<section class="s-nav">
+  <div class="nav-inner">
+    <span class="nav-logo">MEGABOX</span>
+    <span class="nav-center">UI UX RENEWAL</span>
+    <span class="nav-right">KIMWOOSUNG</span>
+  </div>
+</section>
+
+<!-- ════════════════════════════════════════════════
+     SECTION 2 · HERO
+═══════════════════════════════════════════════════ -->
+<section class="s-hero">
+  <div class="hero-text">
+    <p class="hero-en">Your Cinematic Journey Begins</p>
+    <p class="hero-ko">당신의 영화 여정이 시작됩니다</p>
+  </div>
+</section>
+
+<!-- ════════════════════════════════════════════════
+     SECTION 3 · MEET, PLAY SHARE
+═══════════════════════════════════════════════════ -->
+<section class="s-meet">
+  <div class="gradient-bar"></div>
+  <h1 class="main-title">MEET, PLAY SHARE</h1>
+  <p class="main-desc">'만나고, 놀고, 공유하는' 복합 문화 공간인 영화관을 넘어 취향과 공간 경험을<br>제안하는 종합 라이프스타일 플랫폼입니다. 예매부터</p>
+  <img class="app-preview" src="../img/ds-app-preview.png" alt="App Preview">
+</section>
+
+<!-- ════════════════════════════════════════════════
+     SECTION 4 · APPLICATION REVIEW
+═══════════════════════════════════════════════════ -->
+<section class="s-apprev">
+  <img class="bg-img" src="../img/ds-app-bg.jpg" alt="">
+  <div class="overlay"></div>
+  <h2 class="rev-title">Application<br>Review</h2>
+  <p class="rev-desc">메가박스앱의 문제점들을 살펴보기 위해 앱스토어와<br>구글 플레이 스토어를 참고하였습니다. 메가박스 앱에 대한<br>부정적인 평가들을 분석했습니다.</p>
+</section>
+
+<!-- ════════════════════════════════════════════════
+     SECTION 5 · USER REVIEW TICKETS
+═══════════════════════════════════════════════════ -->
+<section class="s-tickets">
+  <div style="padding: 60px 105px 0; display: grid; grid-template-columns: repeat(3, 1fr); gap: 32px;">
+
+    <!-- Ticket 1 - USER 01 -->
+    <div class="ticket-card">
+      <div class="ticket-meta-row">
+        <span class="ticket-user-id">USER 01</span>
+        <span class="ticket-brand">MEGABOX</span>
+      </div>
+      <div class="big-quote">"</div>
+      <p class="ticket-quote">극장 정보 보는것도 힘들고 극장 자주가는곳 위주로 시간표 보기도 힘들어요.</p>
+      <hr class="ticket-divider">
+      <div class="ticket-fields">
+        <span class="ticket-field-label">THEATER</span>
+        <span class="ticket-field-label">RATE</span>
+        <span class="ticket-field-label">TIME</span>
+        <span class="ticket-field-label">DATE</span>
+        <span class="ticket-field-value">MEGABOX</span>
+        <span class="ticket-field-value">5-1</span>
+        <span class="ticket-field-value">14:30</span>
+        <span class="ticket-field-value">2025.05.18</span>
+      </div>
+      <hr class="ticket-divider">
+      <div class="ticket-bottom-row">
+        <span class="ticket-movie-label">MOVIE TICKET</span>
+        <span class="ticket-code">MX240518-001</span>
+      </div>
+      <svg class="ticket-barcode barcode-svg" viewBox="0 0 390 57" xmlns="http://www.w3.org/2000/svg">
+        <script>
+          (function(){
+            var svg = document.currentScript.parentNode;
+            var positions = [0,14,19,23,30,38,45,52,58,65,74,83,90,97,103,110,119,128,133,140,146,153,159,166,175,184,191,198,204,211,218,225,232,238,245,252,259,265,272,281,290,299,304,311,320,329,334,341,350,359,364,371,377,384,390];
+            positions.forEach(function(x){
+              var line = document.createElementNS('http://www.w3.org/2000/svg','line');
+              line.setAttribute('x1',x); line.setAttribute('y1',0);
+              line.setAttribute('x2',x); line.setAttribute('y2',57);
+              svg.appendChild(line);
+            });
+          })();
+        </script>
+      </svg>
+    </div>
+
+    <!-- Ticket 2 - USER 02 -->
+    <div class="ticket-card" style="margin-top: 164px;">
+      <div class="ticket-meta-row">
+        <span class="ticket-user-id">USER 02</span>
+        <span class="ticket-brand">MEGABOX</span>
+      </div>
+      <div class="big-quote">"</div>
+      <p class="ticket-quote">익숙한 UI 강점들이 사라져버렸습니다.</p>
+      <hr class="ticket-divider">
+      <div class="ticket-fields">
+        <span class="ticket-field-label">THEATER</span>
+        <span class="ticket-field-label">RATE</span>
+        <span class="ticket-field-label">TIME</span>
+        <span class="ticket-field-label">DATE</span>
+        <span class="ticket-field-value">MEGABOX</span>
+        <span class="ticket-field-value">5-1</span>
+        <span class="ticket-field-value">14:30</span>
+        <span class="ticket-field-value">2025.05.18</span>
+      </div>
+      <hr class="ticket-divider">
+      <div class="ticket-bottom-row">
+        <span class="ticket-movie-label">MOVIE TICKET</span>
+        <span class="ticket-code">MX240518-002</span>
+      </div>
+      <svg class="ticket-barcode barcode-svg" viewBox="0 0 390 57" xmlns="http://www.w3.org/2000/svg">
+        <script>
+          (function(){
+            var svg = document.currentScript.parentNode;
+            var positions = [0,9,17,26,35,44,50,56,65,74,79,88,97,102,111,120,129,134,143,152,157,166,175,180,189,198,207,216,221,230,239,248,253,262,271,280,289,294,303,312,317,326,335,344,349,358,367,376,381,390];
+            positions.forEach(function(x){
+              var line = document.createElementNS('http://www.w3.org/2000/svg','line');
+              line.setAttribute('x1',x); line.setAttribute('y1',0);
+              line.setAttribute('x2',x); line.setAttribute('y2',57);
+              svg.appendChild(line);
+            });
+          })();
+        </script>
+      </svg>
+    </div>
+
+    <!-- Ticket 3 - USER 03 -->
+    <div class="ticket-card" style="margin-top: 316px;">
+      <div class="ticket-meta-row">
+        <span class="ticket-user-id">USER 03</span>
+        <span class="ticket-brand">MEGABOX</span>
+      </div>
+      <div class="big-quote">"</div>
+      <p class="ticket-quote">기존의 편리한 메가박스 영화 예매창의 인터페이스가 많아져서 불편해요.</p>
+      <hr class="ticket-divider">
+      <div class="ticket-fields">
+        <span class="ticket-field-label">THEATER</span>
+        <span class="ticket-field-label">RATE</span>
+        <span class="ticket-field-label">TIME</span>
+        <span class="ticket-field-label">DATE</span>
+        <span class="ticket-field-value">MEGABOX</span>
+        <span class="ticket-field-value">5-1</span>
+        <span class="ticket-field-value">14:30</span>
+        <span class="ticket-field-value">2025.05.18</span>
+      </div>
+      <hr class="ticket-divider">
+      <div class="ticket-bottom-row">
+        <span class="ticket-movie-label">MOVIE TICKET</span>
+        <span class="ticket-code">MX240518-002</span>
+      </div>
+      <svg class="ticket-barcode barcode-svg" viewBox="0 0 390 57" xmlns="http://www.w3.org/2000/svg">
+        <script>
+          (function(){
+            var svg = document.currentScript.parentNode;
+            var positions = [0,11,22,31,42,51,60,69,80,89,100,109,118,129,138,147,158,167,176,185,196,205,214,225,234,243,252,263,272,281,290,301,310,319,328,339,348,357,368,377,386,390];
+            positions.forEach(function(x){
+              var line = document.createElementNS('http://www.w3.org/2000/svg','line');
+              line.setAttribute('x1',x); line.setAttribute('y1',0);
+              line.setAttribute('x2',x); line.setAttribute('y2',57);
+              svg.appendChild(line);
+            });
+          })();
+        </script>
+      </svg>
+    </div>
+
+    <!-- Ticket 4 - USER 04 -->
+    <div class="ticket-card">
+      <div class="ticket-meta-row">
+        <span class="ticket-user-id">USER 04</span>
+        <span class="ticket-brand">MEGABOX</span>
+      </div>
+      <div class="big-quote">"</div>
+      <p class="ticket-quote">극장 정보 보는것도 힘들고 극장 자주가는곳 위주로 시간표 보기도 힘들어요.</p>
+      <hr class="ticket-divider">
+      <div class="ticket-fields">
+        <span class="ticket-field-label">THEATER</span>
+        <span class="ticket-field-label">RATE</span>
+        <span class="ticket-field-label">TIME</span>
+        <span class="ticket-field-label">DATE</span>
+        <span class="ticket-field-value">MEGABOX</span>
+        <span class="ticket-field-value">5-1</span>
+        <span class="ticket-field-value">14:30</span>
+        <span class="ticket-field-value">2025.05.18</span>
+      </div>
+      <hr class="ticket-divider">
+      <div class="ticket-bottom-row">
+        <span class="ticket-movie-label">MOVIE TICKET</span>
+        <span class="ticket-code">MX240518-001</span>
+      </div>
+      <svg class="ticket-barcode barcode-svg" viewBox="0 0 390 57" xmlns="http://www.w3.org/2000/svg">
+        <script>
+          (function(){
+            var svg = document.currentScript.parentNode;
+            var positions = [0,8,16,24,32,40,48,56,64,72,80,88,96,104,112,120,128,136,144,152,160,168,176,184,192,200,208,216,224,232,240,248,256,264,272,280,288,296,304,312,320,328,336,344,352,360,368,376,384,390];
+            positions.forEach(function(x){
+              var line = document.createElementNS('http://www.w3.org/2000/svg','line');
+              line.setAttribute('x1',x); line.setAttribute('y1',0);
+              line.setAttribute('x2',x); line.setAttribute('y2',57);
+              svg.appendChild(line);
+            });
+          })();
+        </script>
+      </svg>
+    </div>
+
+    <!-- Ticket 5 - USER 05 -->
+    <div class="ticket-card" style="margin-top: 164px;">
+      <div class="ticket-meta-row">
+        <span class="ticket-user-id">USER 05</span>
+        <span class="ticket-brand">MEGABOX</span>
+      </div>
+      <div class="big-quote">"</div>
+      <p class="ticket-quote">익숙한 UI 강점들이 사라져버렸습니다.</p>
+      <hr class="ticket-divider">
+      <div class="ticket-fields">
+        <span class="ticket-field-label">THEATER</span>
+        <span class="ticket-field-label">RATE</span>
+        <span class="ticket-field-label">TIME</span>
+        <span class="ticket-field-label">DATE</span>
+        <span class="ticket-field-value">MEGABOX</span>
+        <span class="ticket-field-value">5-1</span>
+        <span class="ticket-field-value">14:30</span>
+        <span class="ticket-field-value">2025.05.18</span>
+      </div>
+      <hr class="ticket-divider">
+      <div class="ticket-bottom-row">
+        <span class="ticket-movie-label">MOVIE TICKET</span>
+        <span class="ticket-code">MX240518-002</span>
+      </div>
+      <svg class="ticket-barcode barcode-svg" viewBox="0 0 390 57" xmlns="http://www.w3.org/2000/svg">
+        <script>
+          (function(){
+            var svg = document.currentScript.parentNode;
+            var positions = [0,7,15,23,31,39,47,55,63,71,79,87,95,103,111,119,127,135,143,151,159,167,175,183,191,199,207,215,223,231,239,247,255,263,271,279,287,295,303,311,319,327,335,343,351,359,367,375,383,390];
+            positions.forEach(function(x){
+              var line = document.createElementNS('http://www.w3.org/2000/svg','line');
+              line.setAttribute('x1',x); line.setAttribute('y1',0);
+              line.setAttribute('x2',x); line.setAttribute('y2',57);
+              svg.appendChild(line);
+            });
+          })();
+        </script>
+      </svg>
+    </div>
+
+  </div>
+</section>
+
+<!-- ════════════════════════════════════════════════
+     SECTION 6 · ANALYSIS HEAD
+═══════════════════════════════════════════════════ -->
+<section class="s-analysis-head" style="background:#f2f2f2; height:300px; position:relative;">
+  <h2 class="head-title" style="position:absolute; top:80px; left:148px; font-size:63px; font-weight:700; color:#000; line-height:1.3;">사용자들의 의견을 기반으로<br>메가박스앱의 문제점을 살펴봤습니다</h2>
+</section>
+
+<!-- ════════════════════════════════════════════════
+     SECTION 7 · PAIN POINTS
+═══════════════════════════════════════════════════ -->
+<section class="s-analysis">
+
+  <!-- Pain Point 1 -->
+  <div style="padding: 80px 152px; display:grid; grid-template-columns: 357px 32px 1fr 32px 274px 24px 274px 24px 274px; align-items:start;">
+    <!-- left stacked screens -->
+    <div class="pain-stacked-screens">
+      <img src="../img/ds-screen5.jpg" alt="" style="width:267px; height:493px; object-fit:cover; border-radius:12px 12px 0 0;">
+      <img src="../img/ds-screen6.jpg" alt="" style="width:267px; height:389px; object-fit:cover;">
+      <img src="../img/ds-screen4.jpg" alt="" style="width:267px; height:212px; object-fit:cover;">
+      <img src="../img/ds-screen3.jpg" alt="" style="width:267px; height:155px; object-fit:cover; border-radius:0 0 12px 12px;">
+    </div>
+    <div></div>
+    <!-- text block -->
+    <div>
+      <h3 class="pain-title">예매 흐름의 비효율성</h3>
+      <p class="pain-body">영화 선택 , 극장 선택 , 영화 선택 , 시간 , 좌석의 흐름으로 지점마다 상영시간과 좌석이 다르고 정보가 없는 상태에서 선택을 강요합니다.<br>사용자의 판단 지연과 반복 탐색이 발생됩니다.</p>
+      <div style="margin-top:60px;">
+        <h3 class="pain-title">정보 계층의 붕괴</h3>
+        <p class="pain-body">서비스, 혜택, 이벤트의 동일한 중요도로 노출하여 시각적 계층이 부족합니다. 이로 인해 중요한 기능이 묻히고 스캔 설계되었습니다. 선택의</p>
+        <div style="margin-top:40px;">
+          <span style="font-size:40px; font-weight:500; color:#000; display:block; margin-bottom:12px;">핵심 문제</span>
+          <p class="pain-core-desc">정보의 중요도가 구분되지 않아 사용자 시선이 분산됩니다.</p>
+        </div>
+      </div>
+    </div>
+    <div></div>
+    <!-- right screens -->
+    <img src="../img/ds-screen1.jpg" alt="" style="width:274px; height:595px; object-fit:cover; border-radius:12px;">
+    <div></div>
+    <img src="../img/ds-screen2.jpg" alt="" style="width:274px; height:595px; object-fit:cover; border-radius:12px;">
+    <div></div>
+    <img src="../img/ds-screen2.jpg" alt="" style="width:274px; height:595px; object-fit:cover; border-radius:12px; opacity:.7;">
+  </div>
+
+  <!-- Pain Point 2 -->
+  <div style="padding: 80px 152px; display:grid; grid-template-columns: 420px 32px 1fr 32px 274px 24px 274px; align-items:start; background: rgba(0,0,0,.02);">
+    <div>
+      <h3 class="pain-title">정보 접근성의 부족</h3>
+      <p class="pain-body">상영 시간과 좌석 현황이 후반단계에서 제공되어<br>사용자의 판단 지연과 반복 탐색이 발생됩니다.<br>핵심 정보가 늦게 제공되어 사용자의 판단이 어렵습니다.</p>
+    </div>
+    <div></div>
+    <div style="margin-top:40px; color:#000;">
+      <p style="font-size:24px; font-weight:400; line-height:1.65; max-width:462px;">상영 시간과 좌석 현황이 후반단계에서 제공되어<br>사용자의 반복 탐색이 발생됩니다.</p>
+    </div>
+    <div></div>
+    <img src="../img/ds-screen3.jpg" alt="" style="width:274px; height:596px; object-fit:cover; border-radius:12px;">
+    <div></div>
+    <img src="../img/ds-screen4.jpg" alt="" style="width:274px; height:596px; object-fit:cover; border-radius:12px;">
+  </div>
+
+</section>
+
+<!-- ════════════════════════════════════════════════
+     SECTION 8 · USER PERSONA
+═══════════════════════════════════════════════════ -->
+<section class="s-persona">
+  <div class="persona-header">
+    <h2 class="persona-hero-title">User<br>Persona</h2>
+    <p class="persona-hero-desc">메가박스앱의 문제점들을 기준으로 가상의 페르소나<br>인물들을 설정하여 PAIN POINT와 NEEDS를 설정하였습니다.</p>
+  </div>
+
+  <div class="persona-cards">
+
+    <!-- USER 01 -->
+    <div class="persona-card">
+      <div class="persona-left">
+        <div class="persona-user-id">USER 01</div>
+        <div class="persona-name-row">
+          <span class="persona-name">김민준</span>
+          <span class="persona-age">(29)</span>
+        </div>
+        <p class="persona-role">Software Engineer</p>
+      </div>
+      <div class="persona-right">
+        <div class="persona-quote">"</div>
+        <p class="persona-section-label">GOAL</p>
+        <p class="persona-goal-text">가까운 극장을 빠르게 확인하고,<br>최단 시간 안에 예매를 완료합니다.</p>
+        <p class="persona-section-label">PAIN POINT</p>
+        <ul class="persona-list">
+          <li>영화 선택 이후 다시 극장을 선택해야 하는 구조</li>
+          <li>상영 시간과 좌석 정보를 늦게 확인 가능</li>
+        </ul>
+        <p class="persona-section-label">NEEDS</p>
+        <ul class="persona-list">
+          <li>현재 위치 기반 극장 추천</li>
+          <li>상영 시간 및 잔여 좌석 빠른 확인</li>
+          <li>최소한의 단계로 예매하고 싶어요</li>
+        </ul>
+      </div>
+    </div>
+
+    <!-- USER 02 -->
+    <div class="persona-card">
+      <div class="persona-left">
+        <div class="persona-user-id">USER 02</div>
+        <div class="persona-name-row">
+          <span class="persona-name">이지윤</span>
+          <span class="persona-age">(30)</span>
+        </div>
+        <p class="persona-role">Product Manager</p>
+      </div>
+      <div class="persona-right">
+        <div class="persona-quote">"</div>
+        <p class="persona-section-label">GOAL</p>
+        <p class="persona-goal-text">단순한 예매가 아닌 UI를 탐험하며<br>영화를 보는 듯한 몰입감을 느끼게 합니다.</p>
+        <p class="persona-section-label">PAIN POINT</p>
+        <ul class="persona-list">
+          <li>영화를 선택하기 전부터 기대감과 몰입감을 경험하기 힘들다</li>
+          <li>예매 과정이 기능 중심이라 영화를 발견하는 재미가 부족하다</li>
+        </ul>
+        <p class="persona-section-label">NEEDS</p>
+        <ul class="persona-list">
+          <li>탐색 과정에서도 영화를 보는 듯한 몰입감을 느끼고 싶다.</li>
+          <li>영화의 분위기와 세계관을 직관적으로 체험하고 싶다</li>
+          <li>작품 선택하는 과정을 즐기고 싶어요.</li>
+        </ul>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<!-- ════════════════════════════════════════════════
+     SECTION 9 · JOURNEY MAP
+═══════════════════════════════════════════════════ -->
+<section class="s-journey">
+  <div class="journey-inner" style="padding-top:0;">
+    <h2 class="journey-title" style="padding-top: 40px;">Journy Map</h2>
+    <table class="journey-table">
+      <thead>
+        <tr>
+          <th style="width:220px;"><span class="journey-stage-dot"></span>영화 보기 결정</th>
+          <th style="width:220px;"><span class="journey-stage-dot"></span>앱 탐색 시작</th>
+          <th style="width:220px;"><span class="journey-stage-dot"></span>상영 시간 탐색</th>
+          <th style="width:220px;"><span class="journey-stage-dot"></span>좌석 탐색</th>
+          <th style="width:220px;"><span class="journey-stage-dot"></span>예매 완료</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>오늘 영화 볼 생각에 기대된다!</td>
+          <td>어디서부터 찾아야 하지?</td>
+          <td>정보가 많아 비교하기 힘들다.</td>
+          <td>좌석 찾는 데 시간이 걸린다</td>
+          <td>예매 완료, 영화 관람!</td>
+        </tr>
+        <tr>
+          <td>가장 가까운 극장 확인</td>
+          <td>영화를 한눈에 선택</td>
+          <td>빠른 결제</td>
+          <td>속도가 저하됩니</td>
+          <td>영화를 보는 듯한 몰입감을 느끼게 합니다.</td>
+        </tr>
+      </tbody>
+    </table>
+
+    <!-- Journey SVG arrow flow -->
+    <svg width="1620" height="60" viewBox="0 0 1620 60" style="margin-top:32px; display:block;">
+      <defs>
+        <marker id="arrow" markerWidth="8" markerHeight="8" refX="6" refY="3" orient="auto">
+          <path d="M0,0 L0,6 L8,3 z" fill="rgba(139,61,255,.6)"/>
+        </marker>
+      </defs>
+      <line x1="0" y1="30" x2="1600" y2="30" stroke="rgba(139,61,255,.3)" stroke-width="1.5" stroke-dasharray="6,4" marker-end="url(#arrow)"/>
+      <circle cx="0" cy="30" r="5" fill="rgba(139,61,255,.8)"/>
+      <circle cx="324" cy="30" r="5" fill="rgba(139,61,255,.8)"/>
+      <circle cx="648" cy="30" r="5" fill="rgba(139,61,255,.8)"/>
+      <circle cx="972" cy="30" r="5" fill="rgba(139,61,255,.8)"/>
+      <circle cx="1296" cy="30" r="5" fill="rgba(139,61,255,.8)"/>
+    </svg>
+  </div>
+</section>
+
+<!-- ════════════════════════════════════════════════
+     SECTION 10 · FUTURE IMPROVEMENTS
+═══════════════════════════════════════════════════ -->
+<section class="s-future">
+  <div style="padding-top: 0;">
+    <h2 class="future-title" style="padding-top:0; margin-top:0;">Future Improvements</h2>
+    <p class="future-desc">FAST MODE를 활용하여 사용자의 예매 흐름을 중심으로 복잡한 정보 구조를 단순화하고, MEGA MODE를 활용하여 영화를 보는 것이 아닌 영화 속으로 들어가는 메가박스</p>
+    <div class="future-items">
+      <div>
+        <p class="future-item-title">Immersive Experience</p>
+        <p class="future-item-desc">영화를 보는 것이 아닌 영화 속으로 들어가는 경험</p>
+      </div>
+      <div>
+        <p class="future-item-title">Cinematic Interface</p>
+        <p class="future-item-desc">영화 포스터와 UI의 경계를 허무는 시네마틱 인터페이스</p>
+      </div>
+      <div>
+        <p class="future-item-title">Purple Glow</p>
+        <p class="future-item-desc">메가박스의 아이덴티티를 퍼플 무드</p>
+      </div>
+      <div>
+        <p class="future-item-title">Interactive Journey</p>
+        <p class="future-item-desc">예매 과정을 하나의 탐험처럼 설계한 인터랙티브 경험</p>
+      </div>
+    </div>
+
+    <!-- 4 Circles -->
+    <div class="future-circles">
+      <div class="future-circle-wrap">
+        <div class="future-circle">
+          <svg width="80" height="80" viewBox="0 0 80 80" style="margin-bottom:20px; opacity:.7;">
+            <circle cx="40" cy="40" r="36" fill="none" stroke="rgba(139,61,255,.5)" stroke-width="1.5"/>
+            <circle cx="40" cy="40" r="20" fill="rgba(139,61,255,.15)"/>
+          </svg>
+          <p class="future-circle-label">User Flow<br>Centered Design</p>
+          <p class="future-circle-desc">사용자 흐름 중심 설계</p>
+        </div>
+      </div>
+      <div class="future-circle-wrap">
+        <div class="future-circle">
+          <svg width="80" height="80" viewBox="0 0 80 80" style="margin-bottom:20px; opacity:.7;">
+            <circle cx="40" cy="40" r="36" fill="none" stroke="rgba(139,61,255,.5)" stroke-width="1.5"/>
+            <rect x="22" y="26" width="36" height="28" rx="4" fill="none" stroke="rgba(139,61,255,.7)" stroke-width="1.5"/>
+          </svg>
+          <p class="future-circle-label">Delivering<br>Contextual Insights</p>
+          <p class="future-circle-desc">맥락적 인사이트 제공</p>
+        </div>
+      </div>
+      <div class="future-circle-wrap">
+        <div class="future-circle">
+          <svg width="80" height="80" viewBox="0 0 80 80" style="margin-bottom:20px; opacity:.7;">
+            <circle cx="40" cy="40" r="36" fill="none" stroke="rgba(139,61,255,.5)" stroke-width="1.5"/>
+            <line x1="24" y1="40" x2="56" y2="40" stroke="rgba(139,61,255,.7)" stroke-width="1.5"/>
+            <line x1="40" y1="24" x2="40" y2="56" stroke="rgba(139,61,255,.7)" stroke-width="1.5"/>
+          </svg>
+          <p class="future-circle-label">Clear Call<br>to Action</p>
+          <p class="future-circle-desc">명확한 행동 유도</p>
+        </div>
+      </div>
+      <div class="future-circle-wrap">
+        <div class="future-circle">
+          <svg width="80" height="80" viewBox="0 0 80 80" style="margin-bottom:20px; opacity:.7;">
+            <circle cx="40" cy="40" r="36" fill="none" stroke="rgba(139,61,255,.5)" stroke-width="1.5"/>
+            <path d="M28 52 L40 28 L52 52" fill="none" stroke="rgba(139,61,255,.7)" stroke-width="1.5"/>
+          </svg>
+          <p class="future-circle-label">Enhancing<br>Visual Hierarchy</p>
+          <p class="future-circle-desc">시각적 위계 강화</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ════════════════════════════════════════════════
+     SECTION 11 · DESIGN ELEMENTS
+═══════════════════════════════════════════════════ -->
+<section class="s-design" style="min-height:1772px;">
+  <div style="position:relative; padding: 0 157px;">
+
+    <!-- "Design Elements" right-aligned -->
+    <div style="position:absolute; top:0; right:157px; text-align:right; font-size:128px; font-weight:700; color:#fff; letter-spacing:-.03em; line-height:1.1; padding-top:0;">
+      Design<br>Elements
+    </div>
+
+    <!-- Giant Aa -->
+    <div style="font-size:476px; font-weight:700; color:#fff; line-height:.88; letter-spacing:-.05em; padding-top:0; margin-top:0;">Aa</div>
+
+    <!-- Color swatches + meta -->
+    <div style="display:grid; grid-template-columns: 440px 440px 440px; gap:60px; margin-top:40px; padding-bottom:80px;">
+
+      <!-- Swatch 1 - PURPLE -->
+      <div>
+        <svg width="380" height="80" viewBox="0 0 380 80" style="border-radius:10px; display:block; margin-bottom:12px;">
+          <defs>
+            <linearGradient id="gp1" x1="0" y1="0" x2="1" y2="0">
+              <stop offset="0%" stop-color="#9A00DC"/>
+              <stop offset="100%" stop-color="#7000b8"/>
+            </linearGradient>
+          </defs>
+          <rect width="380" height="80" rx="10" fill="url(#gp1)"/>
+        </svg>
+        <p style="font-size:25px; font-weight:700; color:#fff; margin-bottom:4px;">PURPLE</p>
+        <p style="font-size:25px; font-weight:400; color:#fff;">#9A00DC</p>
+      </div>
+
+      <!-- Typography label -->
+      <div>
+        <p style="font-size:33px; font-weight:700; color:#fff; letter-spacing:.04em; margin-bottom:10px;">TYPOGRAPHY</p>
+        <p style="font-size:33px; font-weight:400; color:#fff;">Pretendard</p>
+      </div>
+
+      <!-- Swatch 2 - ACCENT PURPLE -->
+      <div>
+        <svg width="380" height="80" viewBox="0 0 380 80" style="border-radius:10px; display:block; margin-bottom:12px;">
+          <defs>
+            <linearGradient id="gp2" x1="0" y1="0" x2="1" y2="0">
+              <stop offset="0%" stop-color="#1C00F1"/>
+              <stop offset="100%" stop-color="#0d00b8"/>
+            </linearGradient>
+          </defs>
+          <rect width="380" height="80" rx="10" fill="url(#gp2)"/>
+        </svg>
+        <p style="font-size:25px; font-weight:700; color:#fff; margin-bottom:4px;">ACCENT PURPLE</p>
+        <p style="font-size:25px; font-weight:400; color:#fff;">#1C00F1</p>
+      </div>
+
+      <!-- Background swatch -->
+      <div>
+        <svg width="380" height="80" viewBox="0 0 380 80" style="border-radius:10px; display:block; margin-bottom:12px; border: 1px solid rgba(255,255,255,.15);">
+          <rect width="380" height="80" rx="10" fill="#F2F2F2"/>
+        </svg>
+        <p style="font-size:25px; font-weight:700; color:#fff; margin-bottom:4px;">BACKGROUND</p>
+        <p style="font-size:25px; font-weight:400; color:#fff;">#F2F2F2</p>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- ════════════════════════════════════════════════
+     SECTION 12 · WIREFRAME / CONTENTS
+═══════════════════════════════════════════════════ -->
+<section class="s-wireframe" style="min-height:1937px; position:relative;">
+  <div class="wireframe-inner">
+    <h2 class="wireframe-main-title">Contents<br>뷰</h2>
+  </div>
+  <span style="position:absolute; top:485px; right:157px; font-size:40px; font-weight:500; color:#000;">Wireframe</span>
+
+  <div style="padding: 80px 157px; display:grid; grid-template-columns: repeat(5, 267px); gap:28px; justify-content:center; margin-top:40px;">
+    <div style="border-radius:24px; overflow:hidden; box-shadow:0 8px 24px rgba(0,0,0,.12); border:1px solid rgba(0,0,0,.06);">
+      <img src="../img/ds-screen1.jpg" alt="Wireframe 1" style="width:267px; height:493px; object-fit:cover; display:block;">
+    </div>
+    <div style="border-radius:24px; overflow:hidden; box-shadow:0 8px 24px rgba(0,0,0,.12); border:1px solid rgba(0,0,0,.06);">
+      <img src="../img/ds-screen2.jpg" alt="Wireframe 2" style="width:267px; height:493px; object-fit:cover; display:block;">
+    </div>
+    <div style="border-radius:24px; overflow:hidden; box-shadow:0 8px 24px rgba(0,0,0,.12); border:1px solid rgba(0,0,0,.06);">
+      <img src="../img/ds-screen3.jpg" alt="Wireframe 3" style="width:267px; height:493px; object-fit:cover; display:block;">
+    </div>
+    <div style="border-radius:24px; overflow:hidden; box-shadow:0 8px 24px rgba(0,0,0,.12); border:1px solid rgba(0,0,0,.06);">
+      <img src="../img/ds-screen4.jpg" alt="Wireframe 4" style="width:267px; height:493px; object-fit:cover; display:block;">
+    </div>
+    <div style="border-radius:24px; overflow:hidden; box-shadow:0 8px 24px rgba(0,0,0,.12); border:1px solid rgba(0,0,0,.06);">
+      <img src="../img/ds-screen5.jpg" alt="Wireframe 5" style="width:267px; height:493px; object-fit:cover; display:block;">
+    </div>
+  </div>
+</section>
+
+<!-- ════════════════════════════════════════════════
+     SECTION 13 · UI KIT & FINAL SCREENS
+═══════════════════════════════════════════════════ -->
+<section class="s-final">
+
+  <!-- UI Flow Diagram -->
+  <div style="padding: 120px 289px 80px;">
+    <img src="../img/ds-uiflow.jpg" alt="UI Flow" style="width:1341px; height:1175px; object-fit:cover; border-radius:16px; display:block;">
+  </div>
+
+  <!-- UI KIT heading -->
+  <div style="padding: 0 152px 60px; text-align:center;">
+    <h2 style="font-size:128px; font-weight:500; color:#fff; letter-spacing:-.03em; margin-bottom:56px;">UI KIT</h2>
+    <p style="font-size:32px; font-weight:400; color:#fff; line-height:1.6; max-width:1197px; margin:0 auto;">FAST MODE를 활용하여 사용자의 예매 흐름을 중심으로 복잡한 정보 구조를 단순화하고, MEGA MODE를 활용하여 영화를 보는 것이 아닌 영화 속으로 들어가는 메가박스</p>
+  </div>
+
+  <!-- FAST MODE screens row -->
+  <div style="padding: 40px 152px 80px;">
+    <p style="font-size:16px; font-weight:500; color:#fff; letter-spacing:.1em; margin-bottom:28px;">FAST MODE</p>
+    <div style="display:flex; gap:40px; align-items:flex-start; justify-content:center;">
+      <div style="text-align:center;">
+        <div style="border-radius:24px; overflow:hidden; box-shadow:0 24px 64px rgba(0,0,0,.56), 0 0 30px rgba(139,61,255,.18);">
+          <img src="../img/ds-app-main.jpg" alt="Fast Mode Screen" style="width:387px; height:545px; object-fit:cover; display:block;">
+        </div>
+      </div>
+      <div style="text-align:center;">
+        <div style="border-radius:24px; overflow:hidden; box-shadow:0 24px 64px rgba(0,0,0,.56);">
+          <img src="../img/ds-app-light.jpg" alt="Fast Mode Light" style="width:387px; height:545px; object-fit:cover; display:block;">
+        </div>
+      </div>
+      <div style="text-align:center;">
+        <div style="border-radius:24px; overflow:hidden; box-shadow:0 24px 64px rgba(0,0,0,.56);">
+          <img src="../img/ds-screen1.jpg" alt="Screen" style="width:267px; height:493px; object-fit:cover; display:block;">
+        </div>
+      </div>
+      <div style="text-align:center;">
+        <div style="border-radius:24px; overflow:hidden; box-shadow:0 24px 64px rgba(0,0,0,.56);">
+          <img src="../img/ds-screen2.jpg" alt="Screen" style="width:267px; height:493px; object-fit:cover; display:block;">
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- MEGA MODE screens row -->
+  <div style="padding: 40px 152px 120px;">
+    <p style="font-size:16px; font-weight:500; color:#fff; letter-spacing:.1em; margin-bottom:28px;">MEGA MODE</p>
+    <div style="display:flex; gap:40px; align-items:flex-start; justify-content:center;">
+      <div style="text-align:center;">
+        <div style="border-radius:24px; overflow:hidden; box-shadow:0 24px 64px rgba(0,0,0,.56), 0 0 40px rgba(139,61,255,.28);">
+          <img src="../img/ds-mega-mode.jpg" alt="Mega Mode" style="width:384px; height:613px; object-fit:cover; display:block;">
+        </div>
+      </div>
+      <div style="display:flex; flex-direction:column; gap:28px;">
+        <div style="border-radius:24px; overflow:hidden; box-shadow:0 16px 40px rgba(0,0,0,.48);">
+          <img src="../img/ds-app-detail.jpg" alt="Detail" style="width:419px; height:274px; object-fit:cover; display:block;">
+        </div>
+        <div style="border-radius:24px; overflow:hidden; box-shadow:0 16px 40px rgba(0,0,0,.48);">
+          <img src="../img/ds-screen3.jpg" alt="Screen" style="width:419px; height:274px; object-fit:cover; display:block;">
+        </div>
+      </div>
+      <div style="text-align:center;">
+        <div style="border-radius:24px; overflow:hidden; box-shadow:0 24px 64px rgba(0,0,0,.56);">
+          <img src="../img/ds-screen4.jpg" alt="Screen" style="width:267px; height:493px; object-fit:cover; display:block;">
+        </div>
+      </div>
+      <div style="text-align:center;">
+        <div style="border-radius:24px; overflow:hidden; box-shadow:0 24px 64px rgba(0,0,0,.56);">
+          <img src="../img/ds-app-preview.png" alt="App Preview" style="width:267px; height:493px; object-fit:cover; display:block;">
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Footer / Credit -->
+  <div style="padding: 80px 152px 120px; border-top: 1px solid rgba(255,255,255,.08); text-align:center;">
+    <p style="font-size:14px; font-weight:400; color:rgba(255,255,255,.4); letter-spacing:.12em;">MEGABOX UI UX RENEWAL · KIMWOOSUNG · 2026</p>
+  </div>
+
+</section>
+
+<!-- ════════════════════════════════════════════════
+     BARCODE GENERATOR SCRIPT
+═══════════════════════════════════════════════════ -->
+<script>
+  // Generate SVG barcode lines for each barcode element
+  document.querySelectorAll('.barcode-svg').forEach(function(svg) {
+    var w = 390;
+    var count = 42;
+    for (var i = 0; i < count; i++) {
+      var x = Math.round(i * (w / count));
+      var skip = (i % 3 === 0 || i % 7 === 0);
+      if (skip) continue;
+      var line = document.createElementNS('http://www.w3.org/2000/svg', 'line');
+      line.setAttribute('x1', x);
+      line.setAttribute('y1', 0);
+      line.setAttribute('x2', x);
+      line.setAttribute('y2', 57);
+      line.setAttribute('stroke', 'rgba(139,61,255,0.45)');
+      line.setAttribute('stroke-width', i % 5 === 0 ? 2 : 1);
+      svg.appendChild(line);
+    }
+  });
+</script>
+
+</body>
+</html>

@@ -1,6 +1,8 @@
 import * as THREE from "../libs/three.module.js";
 
 const homeScreen = document.querySelector("#home-screen");
+const spotScreen = document.querySelector("#spot-screen");
+const spotSeatScreen = document.querySelector("#spot-seat-screen");
 const movieScreen = document.querySelector("#movie-screen");
 const scheduleScreen = document.querySelector("#schedule-screen");
 const seatMap = document.querySelector("#seat-map");
@@ -71,7 +73,7 @@ const movies = [
   },
   {
     title: "JOHN WICK",
-    image: "../img/존윅.jpg",
+    image: "../img/john-wick.jpg",
     genre: "Action, Crime, Thriller",
     year: "2019",
     runtime: "131min",
@@ -304,10 +306,13 @@ function initializeMovieDial() {
     card.className = "movie-card";
     card.dataset.index = String(index);
     card.setAttribute("aria-label", `${movie.title} 선택`);
+    card.style.backgroundImage = `url("${movie.image}")`;
 
     const image = document.createElement("img");
     image.src = movie.image;
     image.alt = `${movie.title} poster`;
+    image.loading = "eager";
+    image.decoding = "sync";
     card.append(image);
 
     card.addEventListener("click", () => {
@@ -580,7 +585,7 @@ function showScreen(nextScreen, currentScreen, direction = "forward") {
   currentScreen.classList.remove("active");
   nextScreen.classList.remove("screen-entering", "screen-entering-back", "exit-left", "exit-right");
   nextScreen.classList.add("active", enterClass);
-  phoneShell.classList.toggle("light-mode", nextScreen === homeScreen);
+  phoneShell.classList.toggle("light-mode", nextScreen === homeScreen || nextScreen === spotScreen || nextScreen === spotSeatScreen);
 
   window.setTimeout(() => {
     currentScreen.classList.remove("exit-left", "exit-right");
@@ -590,35 +595,442 @@ function showScreen(nextScreen, currentScreen, direction = "forward") {
 
 function activateMegaMode() {
   if (megaModeTransitionRunning) return;
-
   megaModeTransitionRunning = true;
+
   const shellRect = phoneShell.getBoundingClientRect();
-  const buttonRect = megaModeButton.getBoundingClientRect();
-  const centerX = buttonRect.left - shellRect.left + buttonRect.width / 2;
-  const centerY = buttonRect.top - shellRect.top + buttonRect.height / 2;
+  const W = shellRect.width || 402, H = shellRect.height || 874;
 
-  megaModeTransition.style.setProperty("--mode-x", `${centerX}px`);
-  megaModeTransition.style.setProperty("--mode-y", `${centerY}px`);
+  const canvas = document.createElement("canvas");
+  canvas.width = W; canvas.height = H;
+  canvas.style.position = "absolute";
+  canvas.style.top = "0";
+  canvas.style.left = "0";
+  canvas.style.width = W + "px";
+  canvas.style.height = H + "px";
+  canvas.style.zIndex = "90";
+  canvas.style.pointerEvents = "none";
+  phoneShell.appendChild(canvas);
+  const ctx = canvas.getContext("2d");
+
   homeScreen.classList.add("mode-leaving");
-  megaModeTransition.classList.remove("mode-settling");
-  megaModeTransition.classList.add("active");
 
-  window.setTimeout(() => {
-    homeScreen.classList.remove("active");
-    movieScreen.classList.add("active", "mode-arriving");
-    phoneShell.classList.remove("light-mode");
-  }, 620);
+  let _s = 31;
+  const rng = () => { _s = (_s * 1664525 + 1013904223) >>> 0; return _s / 4294967296; };
 
-  window.setTimeout(() => {
-    megaModeTransition.classList.add("mode-settling");
-  }, 980);
+  // ── Infection blobs with spike protrusions ─────────────────────
+  const PTS = 72;
+  const blobs = [
+    { cx: W * .50, cy: H - 42,  maxR: H * 1.52, delay: 0.000 },
+    { cx: W * .28, cy: H + 32,  maxR: H * 1.14, delay: 0.015 },
+    { cx: W * .72, cy: H + 32,  maxR: H * 1.14, delay: 0.015 },
+    { cx: W * .07, cy: H + 52,  maxR: H * 1.00, delay: 0.004 },
+    { cx: W * .93, cy: H + 52,  maxR: H * 1.00, delay: 0.004 },
+    { cx: W * .18, cy: H + 74,  maxR: H * 0.86, delay: 0.033 },
+    { cx: W * .82, cy: H + 74,  maxR: H * 0.86, delay: 0.033 },
+    { cx: W * .50, cy: H + 100, maxR: H * 0.80, delay: 0.050 },
+    { cx: W * .40, cy: H + 120, maxR: H * 0.68, delay: 0.065 },
+    { cx: W * .60, cy: H + 120, maxR: H * 0.68, delay: 0.065 },
+  ].map(b => ({
+    ...b,
+    freqs:       Array.from({ length: 8 }, () => 1.2 + rng() * 5.4),
+    amps:        Array.from({ length: 8 }, () => 0.06 + rng() * 0.28),
+    phases:      Array.from({ length: 8 }, () => rng() * Math.PI * 2),
+    spikeAngles: Array.from({ length: 6 }, () => rng() * Math.PI * 2),
+    spikeWidths: Array.from({ length: 6 }, () => 0.04 + rng() * 0.08),
+    spikeMults:  Array.from({ length: 6 }, () => 1.7 + rng() * 2.0),
+  }));
 
-  window.setTimeout(() => {
-    homeScreen.classList.remove("mode-leaving");
-    movieScreen.classList.remove("mode-arriving");
-    megaModeTransition.classList.remove("active", "mode-settling");
-    megaModeTransitionRunning = false;
-  }, 1380);
+  // ── Creep fingers with branching ──────────────────────────────
+  const N_CR = 20;
+  const creeps = Array.from({ length: N_CR }, (_, i) => ({
+    x:         W * (0.04 + 0.92 * (i / (N_CR - 1))) + (rng() - 0.5) * W * 0.05,
+    maxLen:    H * (0.52 + rng() * 0.74),
+    segs:      30,
+    wFreq:     1.5 + rng() * 4.2,
+    wAmp:      5   + rng() * 24,
+    wPhase:    rng() * Math.PI * 2,
+    width:     0.5 + rng() * 1.6,
+    delay:     rng() * 0.09,
+    prog:      0,
+    branchAt:  0.40 + rng() * 0.35,
+    branchDir: (rng() - 0.5) * 0.9,
+    branchLen: 0.28 + rng() * 0.44,
+  }));
+
+  // ── Veins ─────────────────────────────────────────────────────
+  const veins = Array.from({ length: 16 }, (_, i) => ({
+    x0:    W * (0.06 + 0.88 * (i / 15)),
+    nodes: Array.from({ length: 8 }, (__, k) => ({ dx: (rng() - 0.5) * 40, fracY: (k + 1) / 8 })),
+    len:   H * (0.30 + rng() * 0.58),
+    width: 0.4 + rng() * 1.0,
+    delay: rng() * 0.12,
+    prog:  0,
+  }));
+
+  // ── Spores ────────────────────────────────────────────────────
+  const spores = Array.from({ length: 80 }, (_, i) => ({
+    x: rng() * W, y: H + rng() * 100,
+    vy: -(1.2 + rng() * 3.8), vx: (rng() - 0.5) * 1.4,
+    r:       0.6 + rng() * 2.8,
+    hue:     252 + rng() * 78,
+    maxA:    0.22 + rng() * 0.62,
+    life:    0,
+    span:    0.38 + rng() * 1.0,
+    startAt: i * 0.012,
+  }));
+
+  // ── Bio cells — pulsing organisms inside the dark mass ────────
+  const cells = Array.from({ length: 24 }, () => ({
+    x:       W * (0.08 + rng() * 0.84),
+    y:       H * (0.35 + rng() * 0.58),
+    r:       3 + rng() * 9,
+    hue:     240 + rng() * 65,
+    phase:   rng() * Math.PI * 2,
+    spd:     0.6 + rng() * 1.6,
+    startAt: 0.18 + rng() * 0.32,
+  }));
+
+  // ── Scanline corruption flickers at the frontier ──────────────
+  const scanlines = Array.from({ length: 9 }, () => ({
+    y:       H * (0.10 + rng() * 0.76),
+    width:   1.0 + rng() * 3.5,
+    phase:   rng() * Math.PI * 2,
+    spd:     2.5 + rng() * 5.5,
+    startAt: 0.08 + rng() * 0.38,
+  }));
+
+  const DUR  = 2200;
+  const MID  = 0.42;
+  const FULL = 0.70;
+  let t0 = null, midFired = false, doneFired = false;
+
+  function blobR(b, p) {
+    const lp = p <= b.delay ? 0 : Math.min(1, (p - b.delay) / (1 - b.delay));
+    const e = 1 - Math.pow(1 - lp, 2.4);
+    // subtle breathing pulse as it grows
+    return b.maxR * e * (1 + Math.sin(lp * Math.PI * 7) * 0.012 * lp);
+  }
+
+  function tracePath(b, p) {
+    const r = blobR(b, p);
+    if (r < 1) return;
+    const w = p * 8.0;
+    const spikeGrow = Math.max(0, Math.min(1, (p - 0.08) * 5));
+    for (let i = 0; i <= PTS; i++) {
+      const a = (i / PTS) * Math.PI * 2;
+      let d = 1;
+      for (let j = 0; j < b.freqs.length; j++)
+        d += Math.sin(a * b.freqs[j] + b.phases[j] + w * (0.42 + j * 0.24)) * b.amps[j];
+      // spike fingers reaching ahead of the main mass
+      let sm = 1;
+      for (let s = 0; s < b.spikeAngles.length; s++) {
+        const diff = Math.abs(((a - b.spikeAngles[s] + Math.PI * 3) % (Math.PI * 2)) - Math.PI);
+        if (diff < b.spikeWidths[s]) {
+          const sp = 1 - diff / b.spikeWidths[s];
+          sm = Math.max(sm, 1 + (b.spikeMults[s] - 1) * sp * sp * spikeGrow);
+        }
+      }
+      const vr = r * Math.max(0.10, d) * sm;
+      const x = b.cx + Math.cos(a) * vr, y = b.cy + Math.sin(a) * vr;
+      if (i === 0) ctx.moveTo(x, y); else ctx.lineTo(x, y);
+    }
+    ctx.closePath();
+  }
+
+  function frame(ts) {
+    if (!t0) t0 = ts;
+    const p = Math.min(1, (ts - t0) / DUR);
+    ctx.clearRect(0, 0, W, H);
+
+    // ⓪ Initial burst from button with concentric rings
+    if (p < 0.14) {
+      const pr = p / 0.14;
+      const pulseR = W * 0.68 * pr;
+      ctx.save();
+      ctx.beginPath();
+      ctx.arc(W * 0.5, H - 44, pulseR, 0, Math.PI * 2);
+      const pg = ctx.createRadialGradient(W * 0.5, H - 44, 0, W * 0.5, H - 44, pulseR);
+      pg.addColorStop(0,    `rgba(190,65,255,${(1 - pr) * 0.96})`);
+      pg.addColorStop(0.42, `rgba(130,22,238,${(1 - pr) * 0.58})`);
+      pg.addColorStop(0.78, `rgba(80,8,185,${(1 - pr) * 0.26})`);
+      pg.addColorStop(1,    "rgba(40,2,120,0)");
+      ctx.fillStyle = pg;
+      ctx.shadowColor = "rgba(230,96,255,0.96)";
+      ctx.shadowBlur = 65;
+      ctx.fill();
+      ctx.restore();
+      for (let ring = 0; ring < 3; ring++) {
+        const rr = pulseR * (0.28 + ring * 0.28);
+        const ra = (1 - pr) * (1 - ring * 0.32);
+        if (ra < 0.04) continue;
+        ctx.save();
+        ctx.beginPath();
+        ctx.arc(W * 0.5, H - 44, rr, 0, Math.PI * 2);
+        ctx.strokeStyle = `rgba(210,105,255,${ra * 0.62})`;
+        ctx.lineWidth = 1.6 - ring * 0.45;
+        ctx.shadowColor = "rgba(210,105,255,0.82)";
+        ctx.shadowBlur = 22;
+        ctx.stroke();
+        ctx.restore();
+      }
+    }
+
+    if (p >= FULL) {
+      const a = Math.min(1, (p - FULL) / 0.13);
+      ctx.fillStyle = `rgba(5,4,18,${a})`;
+      ctx.fillRect(0, 0, W, H);
+    }
+
+    if (p < FULL + 0.09) {
+      const now = performance.now() * 0.001;
+
+      // ① Blob mass — deep purple gradient fill
+      const grad = ctx.createLinearGradient(0, H, 0, 0);
+      grad.addColorStop(0,    "rgba(128,0,255,0.98)");
+      grad.addColorStop(0.22, "rgba(78,5,205,0.98)");
+      grad.addColorStop(0.48, "rgba(30,4,95,0.99)");
+      grad.addColorStop(0.78, "rgba(12,3,42,1)");
+      grad.addColorStop(1,    "rgba(5,4,18,1)");
+      ctx.save();
+      ctx.beginPath();
+      blobs.forEach(b => tracePath(b, p));
+      ctx.fillStyle = grad;
+      ctx.shadowColor = "rgba(155,48,255,0.75)";
+      ctx.shadowBlur = 85;
+      ctx.fill("nonzero");
+      ctx.restore();
+
+      // ② Screen glow pass
+      ctx.save();
+      ctx.globalCompositeOperation = "screen";
+      const gw = ctx.createRadialGradient(W * 0.5, H * 0.85, 0, W * 0.5, H * 0.85, W);
+      gw.addColorStop(0,   `rgba(172,62,255,${Math.min(.28, p * .58)})`);
+      gw.addColorStop(0.5, `rgba(95,18,215,${Math.min(.13, p * .28)})`);
+      gw.addColorStop(1,   "rgba(0,0,0,0)");
+      ctx.beginPath();
+      blobs.forEach(b => tracePath(b, p));
+      ctx.fillStyle = gw;
+      ctx.fill("nonzero");
+      ctx.restore();
+
+      // ③ Chromatic aberration edge — RGB split at the infection frontier
+      const ea = Math.min(1, p * 7) * Math.max(0, 1 - (p - FULL) / 0.05);
+      if (ea > 0.01) {
+        ctx.save();
+        ctx.translate(-2.5, 0);
+        ctx.lineWidth = 2.0;
+        ctx.shadowColor = "rgba(255,55,85,0.55)";
+        ctx.shadowBlur = 12;
+        blobs.forEach(b => {
+          ctx.beginPath();
+          tracePath(b, p);
+          ctx.strokeStyle = `rgba(255,55,85,${ea * 0.40})`;
+          ctx.stroke();
+        });
+        ctx.restore();
+
+        ctx.save();
+        ctx.translate(2.5, 0);
+        ctx.lineWidth = 2.0;
+        ctx.shadowColor = "rgba(90,210,255,0.55)";
+        ctx.shadowBlur = 12;
+        blobs.forEach(b => {
+          ctx.beginPath();
+          tracePath(b, p);
+          ctx.strokeStyle = `rgba(90,210,255,${ea * 0.40})`;
+          ctx.stroke();
+        });
+        ctx.restore();
+
+        ctx.save();
+        ctx.lineWidth = 2.8;
+        ctx.shadowColor = "rgba(232,112,255,1)";
+        ctx.shadowBlur = 55;
+        blobs.forEach(b => {
+          ctx.beginPath();
+          tracePath(b, p);
+          ctx.strokeStyle = `rgba(218,92,255,${ea * 0.92})`;
+          ctx.stroke();
+        });
+        ctx.restore();
+      }
+
+      // ④ Creep fingers with branching
+      const ta = Math.min(1, p * 10) * Math.max(0, 1 - (p - FULL * 0.60) / 0.16);
+      if (ta > 0.01) {
+        ctx.save();
+        ctx.lineCap = "round";
+        creeps.forEach(tr => {
+          if (p < tr.delay) return;
+          tr.prog = Math.min(1, tr.prog + 0.016);
+          const len = tr.maxLen * tr.prog;
+          if (len < 4) return;
+          // main finger
+          ctx.beginPath();
+          ctx.moveTo(tr.x, H);
+          for (let s = 1; s <= tr.segs; s++) {
+            const f = s / tr.segs;
+            const y = H - len * f;
+            const xo = Math.sin(f * tr.wFreq * Math.PI + tr.wPhase + now * 2.1) * tr.wAmp * (1 - f * 0.56);
+            ctx.lineTo(tr.x + xo, y);
+          }
+          const tg = ctx.createLinearGradient(0, H, 0, H - len);
+          tg.addColorStop(0,    `rgba(232,96,255,${ta * 0.97})`);
+          tg.addColorStop(0.38, `rgba(188,62,248,${ta * 0.44})`);
+          tg.addColorStop(1,    "rgba(155,38,226,0)");
+          ctx.strokeStyle = tg;
+          ctx.lineWidth = tr.width;
+          ctx.shadowColor = "rgba(222,90,255,0.96)";
+          ctx.shadowBlur = 30;
+          ctx.stroke();
+          // branch off main finger
+          if (tr.prog > tr.branchAt) {
+            const bp  = Math.min(1, (tr.prog - tr.branchAt) / (1 - tr.branchAt));
+            const bsF = tr.branchAt;
+            const bsY = H - len * bsF;
+            const bsX = tr.x + Math.sin(bsF * tr.wFreq * Math.PI + tr.wPhase + now * 2.1) * tr.wAmp * (1 - bsF * 0.56);
+            const bLen = len * bp * tr.branchLen;
+            if (bLen > 3) {
+              ctx.beginPath();
+              ctx.moveTo(bsX, bsY);
+              for (let s = 1; s <= 18; s++) {
+                const f = s / 18;
+                const y = bsY - bLen * f;
+                const xo = Math.sin(f * tr.wFreq * 1.4 * Math.PI + tr.wPhase + 1.9 + now * 2.8) * tr.wAmp * 0.52 * (1 - f * 0.5);
+                ctx.lineTo(bsX + xo + tr.branchDir * bLen * f, y);
+              }
+              const bg = ctx.createLinearGradient(0, bsY, 0, bsY - bLen);
+              bg.addColorStop(0, `rgba(205,78,250,${ta * 0.72})`);
+              bg.addColorStop(1, "rgba(162,42,232,0)");
+              ctx.strokeStyle = bg;
+              ctx.lineWidth = tr.width * 0.55;
+              ctx.shadowBlur = 20;
+              ctx.stroke();
+            }
+          }
+        });
+        ctx.restore();
+      }
+
+      // ⑤ Veins — bright filaments threading through the mass
+      const va = Math.min(1, p * 6) * Math.max(0, 1 - (p - FULL * 0.5) / 0.22);
+      if (va > 0.01) {
+        ctx.save();
+        ctx.lineCap = "round";
+        veins.forEach(v => {
+          if (p < v.delay) return;
+          v.prog = Math.min(1, v.prog + 0.014);
+          const len = v.len * v.prog;
+          if (len < 3) return;
+          ctx.beginPath();
+          ctx.moveTo(v.x0, H);
+          let cx2 = v.x0;
+          for (let k = 0; k < v.nodes.length; k++) {
+            const nd = v.nodes[k];
+            const f = nd.fracY;
+            if (f * len > len) break;
+            cx2 += nd.dx * 0.35 + Math.sin(now * 1.4 + k) * 2;
+            ctx.lineTo(cx2, H - f * len);
+          }
+          const vg = ctx.createLinearGradient(0, H, 0, H - len);
+          vg.addColorStop(0,   `rgba(200,120,255,${va * 0.78})`);
+          vg.addColorStop(0.6, `rgba(150,210,255,${va * 0.38})`);
+          vg.addColorStop(1,   "rgba(130,230,255,0)");
+          ctx.strokeStyle = vg;
+          ctx.lineWidth = v.width;
+          ctx.shadowColor = "rgba(180,200,255,0.72)";
+          ctx.shadowBlur = 14;
+          ctx.stroke();
+        });
+        ctx.restore();
+      }
+
+      // ⑥ Bio cells — glowing organisms pulsing inside the dark mass
+      const cellA = Math.max(0, Math.min(1, (p - 0.18) * 5)) * Math.max(0, 1 - (p - 0.62) * 4);
+      if (cellA > 0.01) {
+        ctx.save();
+        cells.forEach(c => {
+          if (p < c.startAt) return;
+          const pulse = 0.72 + 0.28 * Math.sin(now * c.spd + c.phase);
+          const cr = c.r * pulse;
+          const a  = cellA * 0.72;
+          ctx.beginPath();
+          ctx.arc(c.x, c.y, cr, 0, Math.PI * 2);
+          const cg = ctx.createRadialGradient(c.x, c.y, 0, c.x, c.y, cr);
+          cg.addColorStop(0,   `hsla(${c.hue},82%,76%,${a})`);
+          cg.addColorStop(0.5, `hsla(${c.hue},72%,56%,${a * 0.5})`);
+          cg.addColorStop(1,   `hsla(${c.hue},62%,42%,0)`);
+          ctx.fillStyle = cg;
+          ctx.shadowColor = `hsla(${c.hue},86%,66%,0.88)`;
+          ctx.shadowBlur = 22;
+          ctx.fill();
+        });
+        ctx.restore();
+      }
+
+      // ⑦ Scanline corruption — horizontal flickers at infection boundary
+      if (p > 0.07 && p < FULL + 0.04) {
+        ctx.save();
+        ctx.globalCompositeOperation = "screen";
+        scanlines.forEach(sl => {
+          if (p < sl.startAt) return;
+          const flicker = Math.sin(now * sl.spd + sl.phase) * Math.sin(now * sl.spd * 2.4 + 1.2);
+          const scanA   = Math.max(0, flicker) * 0.38 * Math.max(0, 1 - (p - FULL) / 0.06);
+          if (scanA < 0.03) return;
+          ctx.fillStyle = `rgba(200,120,255,${scanA})`;
+          ctx.fillRect(0, sl.y - sl.width * 0.5, W, sl.width);
+        });
+        ctx.restore();
+      }
+    }
+
+    // ⑧ Spores — tiny glowing particles drifting upward
+    if (p > 0.04) {
+      ctx.save();
+      ctx.shadowBlur = 20;
+      spores.forEach(sp => {
+        if (p < sp.startAt) return;
+        sp.y += sp.vy * 0.56; sp.x += sp.vx * 0.22;
+        sp.life += 0.013;
+        if (sp.y < -28) { sp.y = H + 10; sp.x = Math.random() * W; sp.life = 0; }
+        const lt = Math.min(1, sp.life / sp.span);
+        const a  = sp.maxA * Math.sin(Math.PI * lt) * Math.min(1, (p - sp.startAt) * 9);
+        if (a < 0.01) return;
+        ctx.beginPath();
+        ctx.arc(sp.x, sp.y, sp.r, 0, Math.PI * 2);
+        ctx.fillStyle = `hsla(${sp.hue},90%,74%,${a})`;
+        ctx.shadowColor = `hsla(${sp.hue},94%,66%,0.90)`;
+        ctx.fill();
+      });
+      ctx.restore();
+    }
+
+    if (!midFired && p >= MID) {
+      midFired = true;
+      homeScreen.classList.remove("active");
+      movieScreen.classList.add("active");
+      phoneShell.classList.remove("light-mode");
+    }
+
+    if (p < FULL + 0.07) {
+      requestAnimationFrame(frame);
+    } else if (!doneFired) {
+      doneFired = true;
+      const fs = performance.now();
+      (function fadeOut(now) {
+        const ft = Math.min(1, (now - fs - 110) / 540);
+        canvas.style.opacity = String(Math.max(0, 1 - ft));
+        if (ft < 1) requestAnimationFrame(fadeOut);
+        else {
+          canvas.remove();
+          homeScreen.classList.remove("mode-leaving");
+          megaModeTransitionRunning = false;
+        }
+      })(performance.now());
+    }
+  }
+
+  requestAnimationFrame(frame);
 }
 
 function returnToHome() {
@@ -646,7 +1058,7 @@ function playThreeTicketTransition() {
   ticket3dOverlay.classList.remove("settling");
   ticket3dOverlay.classList.add("active");
 
-  const duration = window.location.hash === "#transition-slow" ? 7000 : 2500;
+  const duration = window.location.hash === "#transition-slow" ? 6500 : 2250;
   const revealDelay = duration * 0.56;
   const revealTicketScreen = () => {
     seatScreen.classList.remove("active", "exit-left");
@@ -658,42 +1070,32 @@ function playThreeTicketTransition() {
 
   const spinStart = performance.now();
   let actualTicket = null;
-  const easeInCubic = (value) => value ** 3;
-  const easeOutCubic = (value) => 1 - ((1 - value) ** 3);
   const smoothStep = (value) => value * value * (3 - 2 * value);
-  const spinEase = (value) => {
-    if (value < 0.16) {
-      return 0.09 * easeInCubic(value / 0.16);
-    }
-    if (value < 0.7) {
-      return 0.09 + 0.75 * easeOutCubic((value - 0.16) / 0.54);
-    }
-    return 0.84 + 0.16 * smoothStep((value - 0.7) / 0.3);
-  };
+  const smootherStep = (value) => value ** 3 * (value * (value * 6 - 15) + 10);
   const animateTicketDom = (now) => {
     const progress = Math.min((now - spinStart) / duration, 1);
-    const eased = smoothStep(progress);
-    const spin = spinEase(progress);
+    const eased = smootherStep(progress);
     const lift = Math.sin(Math.PI * progress);
-    const rotationY = -24 + 384 * spin;
-    const rotationX = 10 * (1 - eased) + Math.sin(progress * Math.PI * 2) * 1.45;
-    const rotationZ = -4 * (1 - eased) + Math.sin(progress * Math.PI) * 1.9;
-    const translateY = -39 - 11 * eased - lift * 1.2;
-    const scale = 0.62 + 0.38 * eased + lift * 0.11;
-    const handoff = Math.max(0, Math.min(1, (progress - .92) / .08));
-    const handoffEased = smoothStep(handoff);
+    const handoff = Math.max(0, Math.min(1, (progress - .82) / .18));
+    const handoffEased = smootherStep(handoff);
+    const rawRotationY = -36 + 396 * eased;
+    const rawRotationX = 9 * (1 - eased) + Math.sin(progress * Math.PI * 2) * 1.15;
+    const rawRotationZ = -3.5 * (1 - eased) + Math.sin(progress * Math.PI) * 1.35;
+    const rawTranslateY = -39 - 11 * eased - lift * 1.2;
+    const rawScale = 0.66 + 0.34 * eased + lift * 0.085;
+    const rotationY = rawRotationY + (360 - rawRotationY) * handoffEased;
+    const rotationX = rawRotationX * (1 - handoffEased);
+    const rotationZ = rawRotationZ * (1 - handoffEased);
+    const translateY = rawTranslateY + (-50 - rawTranslateY) * handoffEased;
+    const scale = rawScale + (1 - rawScale) * handoffEased;
 
-    ticket3dDom.style.opacity = String(Math.min(1, progress / 0.12) * (1 - handoffEased));
+    ticket3dDom.style.opacity = String(Math.min(1, progress / 0.12));
     ticket3dDom.style.transform = `translate3d(-50%, ${translateY}%, 0) perspective(1200px) rotateY(${rotationY}deg) rotateX(${rotationX}deg) rotateZ(${rotationZ}deg) scale(${scale})`;
 
-    if (progress >= .92 && !actualTicket) {
+    if (progress >= .9 && !actualTicket) {
       revealTicketScreen();
       actualTicket = ticketScreen.querySelector(".ticket");
       ticketScreen.classList.remove("ticket-handoff");
-      actualTicket.style.opacity = "0";
-    }
-    if (actualTicket) {
-      actualTicket.style.opacity = String(handoffEased);
     }
 
     if (progress < 1) {
@@ -722,11 +1124,10 @@ function playThreeTicketTransition() {
     }, 320);
   };
 
-  window.setTimeout(finishTransition, duration + 140);
   window.setTimeout(() => {
     if (completed) return;
     finishTransition();
-  }, duration + 520);
+  }, duration + 1500);
 }
 
 function showToast(message) {
@@ -754,6 +1155,130 @@ megaModeButton.addEventListener("click", activateMegaMode);
 document.querySelectorAll(".mode-home-btn, .fast-mode-btn").forEach((button) => {
   button.addEventListener("click", returnToHome);
 });
+
+// ── FAST MODE (spot) navigation ─────────────────────────────
+(function initSpotFlow() {
+  const ROWS = "ABCDEFGHI";
+  const COLS = 12;
+  const AISLE_AFTER = 4; // visual gap between col 4 and 5
+  const SEAT_PRICE = 14000;
+  const reserved = new Set(["A1","A2","A3","A4","A10","A11","A12","B1","B2","B11","B12","C1","C12","H9","H10","G9","G10"]);
+  const userSelected = new Set(["E7","E8"]);
+
+  const rowLabels = document.querySelector("#spot-row-labels");
+  const spotSeatMapEl = document.querySelector("#spot-seat-map");
+  const seatLabelsEl = document.querySelector(".spot-seat-labels");
+  const seatPriceEl = document.querySelector(".spot-seat-price");
+  const paymentModal = document.querySelector("#spot-payment-modal");
+  const checkoutBtn = document.querySelector("#spot-checkout-btn");
+
+  function updateSeatSummary() {
+    const sorted = Array.from(userSelected).sort();
+    const count = sorted.length;
+    if (count === 0) {
+      seatLabelsEl.textContent = "좌석을 선택하세요";
+      seatPriceEl.textContent = "0원";
+    } else {
+      seatLabelsEl.textContent = sorted.join(", ") + "  총 " + count + "석";
+      seatPriceEl.textContent = (count * SEAT_PRICE).toLocaleString("ko-KR") + "원";
+    }
+  }
+
+  if (rowLabels && spotSeatMapEl) {
+    for (const r of ROWS) {
+      const lbl = document.createElement("div");
+      lbl.className = "spot-row-label";
+      lbl.textContent = r;
+      rowLabels.appendChild(lbl);
+      const row = document.createElement("div");
+      row.className = "spot-seat-row";
+      for (let c = 1; c <= COLS; c++) {
+        if (c === AISLE_AFTER + 1) {
+          const gap = document.createElement("span");
+          gap.className = "ss gp";
+          row.appendChild(gap);
+        }
+        const key = r + c;
+        const cell = document.createElement("span");
+        cell.dataset.key = key;
+        cell.className = "ss " + (userSelected.has(key) ? "sl" : reserved.has(key) ? "rv" : "av");
+        row.appendChild(cell);
+      }
+      spotSeatMapEl.appendChild(row);
+    }
+    updateSeatSummary();
+  }
+
+  if (spotSeatMapEl) {
+    spotSeatMapEl.addEventListener("click", e => {
+      const cell = e.target.closest(".ss");
+      if (!cell || !cell.dataset.key) return;
+      const key = cell.dataset.key;
+      if (reserved.has(key)) return;
+      if (userSelected.has(key)) {
+        userSelected.delete(key);
+        cell.className = "ss av";
+      } else {
+        userSelected.add(key);
+        cell.className = "ss sl";
+      }
+      updateSeatSummary();
+    });
+  }
+
+  document.querySelectorAll(".district-card, .favorite-row, .nearby-card").forEach(btn => {
+    btn.addEventListener("click", () => showScreen(spotScreen, homeScreen));
+  });
+
+  document.querySelector("#spot-screen").addEventListener("click", e => {
+    const btn = e.target.closest(".spot-time-btn");
+    if (!btn) return;
+    btn.closest(".spot-times").querySelectorAll(".spot-time-btn").forEach(b => b.classList.remove("selected"));
+    btn.classList.add("selected");
+    showScreen(spotSeatScreen, spotScreen);
+  });
+
+  document.querySelectorAll(".spot-home-btn").forEach(btn => btn.addEventListener("click", returnToHome));
+  document.querySelectorAll(".spot-seat-home-btn").forEach(btn => btn.addEventListener("click", returnToHome));
+
+  document.querySelector("#spot-mega-btn").addEventListener("click", () => {
+    showScreen(homeScreen, spotScreen, "back");
+    window.setTimeout(activateMegaMode, 660);
+  });
+
+  document.querySelector("#spot-back-btn").addEventListener("click", () => showScreen(homeScreen, spotScreen, "back"));
+  document.querySelector("#spot-seat-back").addEventListener("click", () => showScreen(spotScreen, spotSeatScreen, "back"));
+
+  document.querySelector("#spot-seat-mega-btn").addEventListener("click", () => {
+    returnToHome();
+    window.setTimeout(activateMegaMode, 660);
+  });
+
+  if (checkoutBtn && paymentModal) {
+    checkoutBtn.addEventListener("click", () => {
+      if (checkoutBtn.classList.contains("loading")) return;
+      checkoutBtn.classList.add("loading");
+      checkoutBtn.disabled = true;
+      window.setTimeout(() => {
+        checkoutBtn.classList.remove("loading");
+        checkoutBtn.disabled = false;
+        const sorted = Array.from(userSelected).sort();
+        const count = sorted.length;
+        const sub = paymentModal.querySelector(".spot-payment-sub");
+        if (sub) {
+          sub.innerHTML = (count > 0 ? sorted.join(", ") + " · 총 " + count + "석<br>" : "") +
+            (count * SEAT_PRICE).toLocaleString("ko-KR") + "원이 결제되었습니다.";
+        }
+        paymentModal.classList.add("active");
+      }, 1600);
+    });
+
+    paymentModal.querySelector(".spot-payment-close").addEventListener("click", () => {
+      paymentModal.classList.remove("active");
+      window.setTimeout(returnToHome, 320);
+    });
+  }
+})();
 
 enableSwipe(movieDialWrap, moveMovieDial);
 enableSwipe(dateDial, moveDateDial);

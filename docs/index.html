@@ -892,7 +892,10 @@
       border-radius: 22px;
       padding: 0;
       overflow: hidden;
-      background: #100b27;
+      background-color: #100b27;
+      background-position: center;
+      background-size: cover;
+      background-repeat: no-repeat;
       box-shadow: 0 14px 24px rgba(0,0,0,.42);
       cursor: pointer;
       transform-style: preserve-3d;
@@ -1892,6 +1895,921 @@
         animation: none;
       }
     }
+
+    /* ── Spot screen (FAST MODE) ──────────────────────── */
+    .spot-screen { background: #f5f5f5; color: #111; display: flex; flex-direction: column; }
+    .spot-topbar { display: flex; align-items: center; justify-content: space-between; padding: 56px 20px 10px; flex-shrink: 0; background: #fff; }
+    .spot-brand { font-size: 22px; font-weight: 800; color: #5B2BD6; letter-spacing: -0.5px; }
+    .spot-topbar .icon-btn { color: #333; }
+    .spot-topbar .icon-btn svg { stroke: #333; fill: none; stroke-width: 2; stroke-linecap: round; }
+    .spot-dates { display: flex; border-bottom: 1px solid #ebebeb; padding: 0 8px; flex-shrink: 0; }
+    .spot-date { flex: 1; display: flex; flex-direction: column; align-items: center; padding: 7px 4px 9px; background: none; border: none; border-bottom: 2px solid transparent; margin-bottom: -1px; cursor: pointer; color: #aaa; font-size: 12px; gap: 1px; }
+    .spot-date-today { font-size: 10px; color: #5B2BD6; font-weight: 700; }
+    .spot-date.active { color: #111; border-bottom-color: #5B2BD6; }
+    .spot-scroll { flex: 1; overflow-y: auto; padding-bottom: 110px; }
+    .spot-section-label { padding: 14px 20px 8px; font-size: 13px; color: #999; font-weight: 500; }
+    .spot-movie { display: flex; gap: 12px; padding: 12px 20px 14px; border-bottom: 1px solid #f4f4f4; }
+    .spot-poster { width: 64px; height: 86px; border-radius: 6px; object-fit: cover; background: #e0e0e0; flex-shrink: 0; }
+    .spot-info { flex: 1; min-width: 0; }
+    .spot-movie-header { display: flex; align-items: center; justify-content: space-between; margin-bottom: 5px; }
+    .spot-title { font-size: 15px; font-weight: 700; color: #111; }
+    .spot-arrow { stroke: #ccc; fill: none; stroke-linecap: round; stroke-linejoin: round; stroke-width: 2; }
+    .spot-tag { display: inline-flex; align-items: center; gap: 5px; margin-bottom: 8px; }
+    .spot-tag-age { font-size: 10px; font-weight: 700; color: #fff; background: #ef4444; border-radius: 3px; padding: 1px 4px; }
+    .spot-tag-genre { font-size: 11px; color: #3d10e0; background: #ede9fe; border-radius: 4px; padding: 1px 6px; }
+    .spot-times { display: flex; gap: 6px; flex-wrap: wrap; }
+    .spot-time-btn { font-size: 12px; padding: 5px 10px; border-radius: 6px; border: 1.5px solid #e5e5e5; background: #f7f7f7; color: #444; cursor: pointer; transition: border-color .15s ease, color .15s ease, background .15s ease, box-shadow .15s ease; }
+    .spot-time-btn:hover { border-color: #5B2BD6; color: #5B2BD6; background: #fff; box-shadow: 0 0 0 1px #5B2BD6; }
+    .spot-time-btn.selected { background: #222; color: #fff; border-color: #222; box-shadow: none; }
+    .spot-screen .home-nav { background: rgba(255,255,255,.98); border-top: 1px solid #ebebeb; box-shadow: 0 -4px 14px rgba(0,0,0,.06); }
+    .spot-screen .home-nav-btn { color: #888; }
+    .spot-screen .home-nav-btn.active { color: #111; }
+    .spot-screen .home-nav-btn.active svg { fill: #111; stroke: #111; }
+
+    /* ── Spot seat screen (FAST MODE) ──────────────────────── */
+    .spot-seat-screen { background: #f8f8f8; color: #111; display: flex; flex-direction: column; }
+    .spot-seat-topbar { display: flex; align-items: center; padding: 56px 14px 10px; gap: 4px; flex-shrink: 0; background: #fff; border-bottom: 1px solid #ebebeb; }
+    .spot-seat-topbar .icon-btn svg { stroke: #333; fill: none; stroke-linecap: round; stroke-linejoin: round; stroke-width: 2; }
+    .spot-seat-header-title { font-size: 15px; font-weight: 700; color: #111; }
+    .spot-progress { display: flex; align-items: center; padding: 0 16px; height: 38px; background: #fff; border-bottom: 1px solid #ebebeb; flex-shrink: 0; }
+    .spot-step { flex: 1; text-align: center; font-size: 10px; color: #bbb; }
+    .spot-step.active { color: #5B2BD6; font-weight: 700; }
+    .spot-step.done { color: #999; }
+    .spot-step-sep { color: #ddd; font-size: 10px; padding: 0 2px; }
+    .spot-seat-movie-info { display: flex; align-items: center; gap: 10px; padding: 10px 16px; background: #fff; border-bottom: 1px solid #ebebeb; flex-shrink: 0; }
+    .spot-seat-poster { width: 36px; height: 50px; border-radius: 4px; object-fit: cover; background: #e0e0e0; flex-shrink: 0; }
+    .spot-seat-movie-name { font-size: 13px; font-weight: 700; color: #111; }
+    .spot-seat-meta { font-size: 11px; color: #888; margin-top: 2px; }
+    .spot-seat-content { flex: 1; overflow-y: auto; padding-bottom: 12px; }
+    .spot-screen-label { text-align: center; font-size: 10px; color: #aaa; padding: 10px 0 2px; letter-spacing: 1px; }
+    .spot-seat-grid-wrap { display: flex; padding: 4px 10px; gap: 4px; }
+    .spot-row-labels { display: flex; flex-direction: column; gap: 3px; }
+    .spot-row-label { height: 20px; width: 16px; font-size: 10px; color: #aaa; display: flex; align-items: center; justify-content: center; }
+    .spot-seat-grid { flex: 1; display: flex; flex-direction: column; gap: 3px; }
+    .spot-seat-row { display: flex; gap: 2px; justify-content: center; }
+    .ss { width: 20px; height: 20px; border-radius: 3px; flex-shrink: 0; cursor: pointer; transition: transform .1s ease, background .12s ease, border-color .12s ease; }
+    .ss:active:not(.rv) { transform: scale(.82); }
+    .ss.av { background: #e8e8e8; border: 1px solid #ddd; }
+    .ss.av:hover { background: #ddd8f8; border-color: #5B2BD6; }
+    .ss.rv { background: #ccc; border: 1px solid #bbb; cursor: default; }
+    .ss.sl { background: #5B2BD6; border: 1px solid #4a23b5; }
+    .ss.gp { background: transparent; border: none; cursor: default; width: 10px; }
+    .spot-seat-legend { display: flex; gap: 12px; padding: 8px 16px; background: #fff; border-top: 1px solid #f0f0f0; }
+    .spot-seat-legend span { display: flex; align-items: center; gap: 5px; font-size: 10px; color: #888; }
+    .spot-seat-legend i { width: 12px; height: 12px; border-radius: 2px; display: inline-block; }
+    .leg-av { background: #e8e8e8; border: 1px solid #ddd; }
+    .leg-sl { background: #5B2BD6; }
+    .leg-rv { background: #ccc; border: 1px solid #bbb; }
+    .spot-seat-bottom { flex-shrink: 0; background: #fff; border-top: 1px solid #ebebeb; padding: 10px 16px 118px; }
+    .spot-seat-summary { display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px; }
+    .spot-seat-labels { font-size: 13px; color: #111; font-weight: 600; }
+    .spot-seat-price { font-size: 14px; font-weight: 700; color: #111; }
+    .spot-checkout-btn { width: 100%; background: #5B2BD6; color: #fff; border: none; border-radius: 12px; padding: 13px; font-size: 15px; font-weight: 700; cursor: pointer; transition: transform .15s ease, background .15s ease; position: relative; overflow: hidden; }
+    .spot-checkout-btn:active { transform: scale(.96); background: #4a23b5; }
+    .spot-checkout-btn.loading { background: #4a23b5; cursor: not-allowed; }
+    .spot-checkout-btn .btn-text { transition: opacity .15s ease; }
+    .spot-checkout-btn.loading .btn-text { opacity: 0; }
+    .spot-checkout-btn .btn-spinner { display: none; width: 20px; height: 20px; border: 2.5px solid rgba(255,255,255,.35); border-top-color: #fff; border-radius: 50%; position: absolute; left: 50%; top: 50%; transform: translate(-50%, -50%); animation: spot-spin .7s linear infinite; }
+    .spot-checkout-btn.loading .btn-spinner { display: block; }
+    @keyframes spot-spin { to { transform: translate(-50%, -50%) rotate(360deg); } }
+    .spot-seat-screen .home-nav { background: rgba(255,255,255,.98); border-top: 1px solid #ebebeb; box-shadow: 0 -4px 14px rgba(0,0,0,.06); }
+    .spot-seat-screen .home-nav-btn { color: #888; }
+    .spot-seat-screen .home-nav-btn.active svg { fill: #111; stroke: #111; }
+
+    /* ── Payment modal (FAST MODE) ──────────────────────── */
+    #spot-payment-modal { position: absolute; inset: 0; z-index: 50; background: rgba(0,0,0,.46); display: flex; align-items: center; justify-content: center; opacity: 0; visibility: hidden; transition: opacity .28s ease, visibility .28s; backdrop-filter: blur(2px); }
+    #spot-payment-modal.active { opacity: 1; visibility: visible; }
+    .spot-payment-dialog { background: #fff; border-radius: 22px; padding: 32px 28px 28px; text-align: center; width: 272px; box-shadow: 0 24px 64px rgba(0,0,0,.28); transform: scale(.86) translateY(24px); transition: transform .34s cubic-bezier(.16,.78,.18,1); }
+    #spot-payment-modal.active .spot-payment-dialog { transform: scale(1) translateY(0); }
+    .spot-payment-check { width: 58px; height: 58px; border-radius: 50%; background: #5B2BD6; display: flex; align-items: center; justify-content: center; margin: 0 auto 18px; }
+    #spot-payment-modal.active .spot-payment-check { animation: pay-spin-in .52s cubic-bezier(.36,.07,.19,.97) both; }
+    @keyframes pay-spin-in {
+      0%   { transform: scale(0) rotate(0deg);   opacity: 0; }
+      55%  { transform: scale(1.12) rotate(360deg); opacity: 1; }
+      75%  { transform: scale(0.94) rotate(360deg); }
+      100% { transform: scale(1)    rotate(360deg); opacity: 1; }
+    }
+    .spot-payment-check svg { width: 28px; height: 28px; stroke: #fff; fill: none; stroke-width: 2.5; stroke-linecap: round; stroke-linejoin: round; }
+    .spot-payment-check svg polyline { stroke-dasharray: 32; stroke-dashoffset: 32; }
+    #spot-payment-modal.active .spot-payment-check svg polyline { animation: pay-check-draw .32s .46s cubic-bezier(.16,.78,.18,1) forwards; }
+    @keyframes pay-check-draw {
+      0%   { stroke-dashoffset: 32; opacity: 0; }
+      15%  { opacity: 1; }
+      100% { stroke-dashoffset: 0;  opacity: 1; }
+    }
+    .spot-payment-title { font-size: 19px; font-weight: 800; color: #111; margin: 0 0 8px; letter-spacing: -.02em; }
+    .spot-payment-sub { font-size: 13px; color: #888; margin: 0 0 26px; line-height: 1.55; }
+    .spot-payment-close { width: 100%; background: #5B2BD6; color: #fff; border: none; border-radius: 12px; padding: 13px; font-size: 14px; font-weight: 700; cursor: pointer; transition: background .15s ease; }
+    .spot-payment-close:active { background: #4a23b5; }
+
+    /* ── FAST MODE screen content animations ──────────────────────── */
+    .screen.screen-entering > .spot-topbar,
+    .screen.screen-entering > .spot-dates,
+    .screen.screen-entering-back > .spot-topbar,
+    .screen.screen-entering-back > .spot-dates,
+    .screen.screen-entering > .spot-seat-topbar,
+    .screen.screen-entering > .spot-progress,
+    .screen.screen-entering-back > .spot-seat-topbar,
+    .screen.screen-entering-back > .spot-progress { animation: screen-content-rise .48s .08s ease both; }
+    .screen.screen-entering > .spot-scroll,
+    .screen.screen-entering > .spot-seat-movie-info,
+    .screen.screen-entering > .spot-seat-content,
+    .screen.screen-entering-back > .spot-scroll,
+    .screen.screen-entering-back > .spot-seat-movie-info,
+    .screen.screen-entering-back > .spot-seat-content { animation: screen-content-rise .56s .14s cubic-bezier(.16,.78,.18,1) both; }
+
+    /* FAST MODE UI kit rebuild. Scoped to fast screens so Mega mode remains isolated. */
+    .home-screen,
+    .spot-screen,
+    .spot-seat-screen {
+      --fast-purple: #7c2cff;
+      --fast-purple-2: #2500ff;
+      --fast-bg: #f6f6f6;
+      --fast-text: #18151d;
+      --fast-muted: #8d8792;
+      background: var(--fast-bg);
+      color: var(--fast-text);
+    }
+
+    .phone-shell:has(.home-screen.active) > .toast,
+    .phone-shell:has(.spot-screen.active) > .toast,
+    .phone-shell:has(.spot-seat-screen.active) > .toast {
+      display: none;
+    }
+
+    .home-screen {
+      background: linear-gradient(180deg, #fff 0%, #f6f6f6 63%, #f5f5f5 100%);
+    }
+
+    .home-header {
+      padding: 88px 42px 14px;
+    }
+
+    .home-header h1 {
+      margin-bottom: 8px;
+      font-size: 22px;
+      line-height: 1.18;
+      font-weight: 700;
+      letter-spacing: -.05em;
+    }
+
+    .home-header p {
+      color: #9b969f;
+      font-size: 13px;
+      letter-spacing: -.035em;
+    }
+
+    .home-content {
+      padding: 0 35px 116px;
+      overflow-x: hidden;
+      overflow-y: auto;
+    }
+
+    .nearby-card,
+    .district-card,
+    .map-card,
+    .favorite-row,
+    .all-theaters,
+    .spot-date,
+    .spot-info,
+    .spot-seat-movie-info,
+    .spot-seat-content {
+      background: #fff;
+      border: 1px solid rgba(28,22,36,.045);
+      box-shadow: 0 5px 13px rgba(30,25,40,.07);
+    }
+
+    .nearby-card,
+    .district-card,
+    .favorite-row,
+    .spot-info,
+    .spot-time-btn {
+      position: relative;
+      overflow: hidden;
+    }
+
+    .nearby-card::after,
+    .district-card::after,
+    .favorite-row::after,
+    .spot-info::after,
+    .spot-time-btn::after {
+      content: "";
+      position: absolute;
+      inset: 0;
+      border-radius: inherit;
+      pointer-events: none;
+      opacity: 0;
+      box-shadow: inset 0 0 0 1px var(--fast-purple);
+      transition: opacity .18s ease, box-shadow .18s ease;
+    }
+
+    .nearby-card:hover::after,
+    .district-card:hover::after,
+    .favorite-row:hover::after,
+    .spot-movie:hover .spot-info::after {
+      opacity: 1;
+    }
+
+    .nearby-card:hover,
+    .district-card:hover,
+    .favorite-row:hover,
+    .spot-movie:hover .spot-info {
+      transform: translateY(-1px);
+      box-shadow: 0 7px 17px rgba(44,28,72,.1);
+    }
+
+    .nearby-card {
+      height: 72px;
+      margin: 0 8px;
+      border-radius: 10px;
+      grid-template-columns: 64px 1fr 24px;
+      align-items: center;
+      padding: 0 10px 0 14px;
+      transition: transform .18s ease, box-shadow .18s ease;
+    }
+
+    .pin-icon {
+      width: 56px;
+      height: 56px;
+      padding: 0;
+      border-radius: 0;
+      color: transparent;
+      background: transparent;
+      object-fit: contain;
+      object-position: center top;
+      display: block;
+      justify-self: center;
+      align-self: center;
+      margin-top: -26px;
+      flex-shrink: 0;
+    }
+
+    .pin-icon path,
+    .pin-icon circle {
+      display: none;
+    }
+
+    .nearby-card strong,
+    .district-card strong {
+      font-size: 16px;
+      font-weight: 600;
+      letter-spacing: -.04em;
+    }
+
+    .district-card strong {
+      font-weight: 700;
+    }
+
+    .nearby-card small,
+    .district-card small {
+      margin-top: 5px;
+      color: #9d98a2;
+      font-size: 12px;
+      letter-spacing: -.025em;
+    }
+
+    .chevron {
+      width: 20px;
+      height: 20px;
+      stroke: #5b5660;
+      stroke-width: 1.8;
+    }
+
+    .home-pair {
+      height: 112px;
+      margin-top: 9px;
+      margin-left: 8px;
+      margin-right: 8px;
+      grid-template-columns: 1.32fr 1fr;
+      gap: 10px;
+    }
+
+    .district-card,
+    .map-card {
+      border-radius: 10px;
+    }
+
+    .district-card {
+      position: relative;
+      padding: 18px 13px;
+      transition: transform .18s ease, box-shadow .18s ease;
+    }
+
+    .district-card strong {
+      color: var(--fast-purple);
+      font-size: 20px;
+      line-height: 1;
+    }
+
+    .district-card > .chevron {
+      position: absolute;
+      top: 20px;
+      right: 13px;
+      width: 18px;
+      height: 18px;
+    }
+
+    .format-tags {
+      margin-top: 15px;
+      gap: 7px;
+    }
+
+    .format-tags span {
+      padding: 4px 7px;
+      border-radius: 5px;
+      color: #6d29ff;
+      background: #eee4ff;
+      font-size: 11px;
+      font-weight: 700;
+    }
+
+    .map-card {
+      position: relative;
+      overflow: hidden;
+      display: grid;
+      place-items: end center;
+      padding-bottom: 16px;
+      color: #fff;
+      background: #161025 url("../img/figma/fast-map-thumb.png") center / cover no-repeat;
+      font-size: 12px;
+      font-weight: 600;
+    }
+
+    .map-card::after {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(180deg, rgba(10,7,30,0) 32%, rgba(10,7,30,.56) 100%);
+    }
+
+    .map-card span {
+      position: relative;
+      z-index: 1;
+    }
+
+    .map-card .pin-icon {
+      display: none;
+    }
+
+    .favorites-title {
+      margin: 20px 0 10px;
+    }
+
+    .favorites-title h2 {
+      font-size: 19px;
+      font-weight: 700;
+      letter-spacing: -.045em;
+    }
+
+    .favorites-title button {
+      color: #5b5560;
+      font-size: 14px;
+    }
+
+    .favorite-list {
+      gap: 8px;
+    }
+
+    .favorite-row {
+      height: 56px;
+      border-radius: 10px;
+      grid-template-columns: 1fr auto 34px;
+      padding: 0 10px 0 14px;
+      color: #29242d;
+      font-size: 16px;
+      font-weight: 500;
+      letter-spacing: -.03em;
+      transition: transform .18s ease, box-shadow .18s ease;
+    }
+
+    .favorite-row strong {
+      font-weight: 500;
+      transition: font-weight .15s ease;
+    }
+
+    .favorite-row:hover strong {
+      font-weight: 650;
+    }
+
+    .favorite-row span {
+      color: #88838d;
+      font-size: 15px;
+      font-weight: 500;
+    }
+
+    .favorite-benefit {
+      width: 25px;
+      height: 20px;
+      margin-left: 7px;
+      border-radius: 0;
+      background: url("../img/figma/fast-icon-ticket.png") center / contain no-repeat;
+      box-shadow: none;
+    }
+
+    .favorite-benefit::before,
+    .favorite-benefit::after {
+      display: none;
+    }
+
+    .all-theaters {
+      height: 58px;
+      margin-top: 10px;
+      border: 1.2px solid #b349ff;
+      border-radius: 10px;
+      color: #832fff;
+      background: #fff;
+      font-size: 17px;
+      font-weight: 800;
+      letter-spacing: -.04em;
+      transition: transform .18s ease, box-shadow .18s ease, border-color .18s ease;
+    }
+
+    .all-theaters:hover {
+      transform: translateY(-1px);
+      border-color: #7c2cff;
+      box-shadow: 0 7px 17px rgba(124,44,255,.12);
+    }
+
+    .home-nav {
+      height: 104px;
+      padding: 20px 38px 8px;
+      border-radius: 28px 28px 0 0;
+      box-shadow: 0 -6px 18px rgba(32,22,52,.07);
+    }
+
+    .home-nav-btn {
+      gap: 5px;
+      color: #6f6874;
+      font-size: 11px;
+      font-weight: 600;
+    }
+
+    .home-nav-btn svg {
+      width: 36px;
+      height: 36px;
+      fill: none;
+      stroke: none;
+      stroke-width: 0;
+      stroke-linecap: round;
+      stroke-linejoin: round;
+      filter: drop-shadow(0 6px 8px rgba(124,44,255,.14));
+    }
+
+    .fast-nav-icon {
+      width: 34px;
+      height: 34px;
+      object-fit: contain;
+      display: block;
+      filter: drop-shadow(0 6px 8px rgba(124,44,255,.14));
+      pointer-events: none;
+      user-select: none;
+    }
+
+    .fast-order-img {
+      width: 34px;
+      height: 34px;
+    }
+
+    .home-screen .home-nav-btn.active,
+    .spot-screen .spot-home-btn,
+    .spot-seat-screen .spot-seat-home-btn {
+      color: var(--fast-purple);
+    }
+
+    .home-nav-btn.active svg {
+      stroke: none;
+    }
+
+    .home-screen .mega-mode-btn,
+    .spot-screen .mega-mode-btn,
+    .spot-seat-screen .mega-mode-btn {
+      width: 74px;
+      height: 74px;
+      margin-top: -36px;
+      font-size: 15px;
+      line-height: .95;
+      background: linear-gradient(145deg, #af00e9 0%, #2400ff 82%);
+      box-shadow: 0 10px 24px rgba(83,23,229,.32), inset 0 1px 0 rgba(255,255,255,.32);
+    }
+
+    .spot-screen {
+      background: linear-gradient(180deg, #fff 0%, #f7f7f7 100%);
+    }
+
+    .spot-topbar {
+      position: relative;
+      justify-content: space-between;
+      padding: 55px 22px 8px;
+      background: transparent;
+    }
+
+    .spot-brand {
+      position: absolute;
+      left: 50%;
+      transform: translateX(-50%);
+      color: var(--fast-purple);
+      font-size: 22px;
+      font-weight: 750;
+      letter-spacing: -.04em;
+    }
+
+    .spot-topbar .icon-btn {
+      color: #221f27;
+    }
+
+    .spot-title {
+      font-weight: 500;
+    }
+
+    .spot-tag-genre {
+      font-weight: 500;
+    }
+
+    .all-theaters {
+      font-weight: 600;
+    }
+
+    .spot-dates {
+      gap: 8px;
+      padding: 14px 15px 19px;
+      border: 0;
+      background: transparent;
+    }
+
+    .spot-date {
+      flex: 0 0 70px;
+      height: 58px;
+      border: 1px solid transparent;
+      border-radius: 8px;
+      justify-content: center;
+      margin: 0;
+      color: #45404a;
+      background: #fff;
+      box-shadow: 0 5px 12px rgba(30,25,40,.08);
+      font-size: 14px;
+      font-weight: 800;
+      transition: transform .18s ease, border-color .18s ease, box-shadow .18s ease;
+    }
+
+    .spot-date:hover,
+    .spot-date.active {
+      color: var(--fast-purple);
+      border-color: #ac70ff;
+      box-shadow: 0 7px 16px rgba(124,44,255,.14);
+      transform: translateY(-1px);
+    }
+
+    .spot-date-today {
+      color: inherit;
+      font-size: 12px;
+      font-weight: 800;
+    }
+
+    .spot-scroll {
+      padding: 0 16px 118px;
+      overflow-y: auto;
+    }
+
+    .spot-section-label {
+      padding: 0 0 12px;
+      margin: 0;
+      color: #151219;
+      font-size: 17px;
+      font-weight: 850;
+      letter-spacing: -.04em;
+    }
+
+    .spot-movie {
+      min-height: 121px;
+      padding: 0;
+      margin-bottom: 13px;
+      gap: 10px;
+      border: 0;
+      align-items: stretch;
+      transition: transform .18s ease;
+    }
+
+    .spot-poster {
+      position: relative;
+      z-index: 2;
+      width: 82px;
+      height: 121px;
+      border-radius: 9px;
+      box-shadow: 0 5px 13px rgba(30,25,40,.09);
+    }
+
+    .spot-info {
+      margin-left: 0;
+      padding: 19px 12px 12px 20px;
+      border-radius: 13px;
+      box-shadow: 0 5px 13px rgba(30,25,40,.08);
+      transition: transform .18s ease, box-shadow .18s ease;
+    }
+
+    .spot-title {
+      color: #17141d;
+      font-size: 17px;
+      font-weight: 850;
+      letter-spacing: -.045em;
+    }
+
+    .spot-arrow {
+      stroke: #4f4954;
+      width: 18px;
+      height: 18px;
+    }
+
+    .spot-tag {
+      margin-bottom: 14px;
+      gap: 6px;
+    }
+
+    .spot-tag-age {
+      border-radius: 5px;
+      padding: 2px 5px;
+      background: var(--fast-purple);
+      font-size: 11px;
+      font-weight: 850;
+    }
+
+    .spot-tag-genre {
+      padding: 0;
+      color: var(--fast-purple);
+      background: transparent;
+      font-size: 13px;
+      font-weight: 800;
+    }
+
+    .spot-times {
+      flex-wrap: nowrap;
+      gap: 7px;
+    }
+
+    .spot-time-btn {
+      min-width: 47px;
+      height: 32px;
+      padding: 0 7px;
+      border: 1px solid #d4d1d7;
+      border-radius: 6px;
+      color: #26212b;
+      background: #fff;
+      font-size: 13px;
+      transition: transform .16s ease, border-color .16s ease, box-shadow .16s ease;
+    }
+
+    .spot-time-btn:hover {
+      color: #17141d;
+      background: #fff;
+      border-color: var(--fast-purple);
+      box-shadow: none;
+      transform: translateY(-1px);
+    }
+
+    .spot-time-btn.selected {
+      color: #26212b;
+      background: #fff;
+      border-color: #d4d1d7;
+      box-shadow: none;
+      transform: none;
+    }
+
+    .spot-screen .home-nav,
+    .spot-seat-screen .home-nav {
+      border-top: 0;
+      background: rgba(255,255,255,.98);
+      box-shadow: 0 -6px 18px rgba(32,22,52,.07);
+    }
+
+    .spot-seat-screen {
+      background: linear-gradient(180deg, #fff 0%, #f7f7f7 100%);
+    }
+
+    .spot-seat-topbar {
+      position: relative;
+      padding: 54px 17px 9px;
+      background: transparent;
+      border: 0;
+    }
+
+    .spot-seat-header-title {
+      position: absolute;
+      left: 50%;
+      transform: translateX(-50%);
+      color: #17141d;
+      font-size: 16px;
+      font-weight: 650;
+      letter-spacing: -.035em;
+    }
+
+    .spot-progress {
+      position: relative;
+      height: 66px;
+      padding: 14px 24px 0;
+      align-items: flex-start;
+      border: 0;
+      background: transparent;
+    }
+
+    .spot-progress::before {
+      content: "";
+      position: absolute;
+      left: 45px;
+      right: 45px;
+      top: 20px;
+      height: 2px;
+      border-radius: 999px;
+      background: linear-gradient(90deg, #bebbc1 0 62%, #c8b8ff 62% 64%, var(--fast-purple) 64% 78%, #c8b8ff 78% 80%, #bebbc1 80% 100%);
+    }
+
+    .spot-step {
+      position: relative;
+      padding-top: 21px;
+      color: #403a45;
+      font-size: 12px;
+      font-weight: 500;
+    }
+
+    .spot-step::before {
+      content: "";
+      position: absolute;
+      top: -1px;
+      left: 50%;
+      width: 13px;
+      height: 13px;
+      border-radius: 50%;
+      background: linear-gradient(180deg, #c9c6cc, #aba8ae);
+      transform: translateX(-50%);
+      box-shadow: 0 0 0 3px #fff, 0 4px 8px rgba(35,28,44,.08);
+    }
+
+    .spot-step.active {
+      color: var(--fast-purple);
+      font-weight: 650;
+    }
+
+    .spot-step.active::before {
+      width: 16px;
+      height: 16px;
+      top: -3px;
+      background: linear-gradient(145deg, #a146ff 0%, #5b22ff 100%);
+      box-shadow: 0 0 0 4px #fff, 0 6px 14px rgba(124,44,255,.26);
+    }
+
+    .spot-step-sep {
+      display: none;
+    }
+
+    .spot-seat-movie-info {
+      min-height: 96px;
+      margin: 4px 16px 12px;
+      padding: 0 13px;
+      gap: 13px;
+      border: 0;
+      border-radius: 12px;
+    }
+
+    .spot-seat-poster {
+      width: 58px;
+      height: 83px;
+      border-radius: 5px;
+    }
+
+    .spot-seat-movie-name {
+      color: #17141d;
+      font-size: 17px;
+      font-weight: 700;
+      letter-spacing: -.04em;
+    }
+
+    .spot-seat-meta {
+      margin-top: 10px;
+      color: #504b55;
+      font-size: 12px;
+      line-height: 1.8;
+    }
+
+    .spot-seat-content {
+      flex: 0 0 280px;
+      height: 280px;
+      margin: 0 16px;
+      padding: 22px 10px 12px;
+      border: 0;
+      border-radius: 12px;
+      overflow: hidden;
+    }
+
+    .spot-screen-label {
+      display: none;
+    }
+
+    .spot-seat-grid-wrap {
+      padding: 0;
+      gap: 4px;
+    }
+
+    .spot-row-labels {
+      gap: 4px;
+      padding-top: 0;
+    }
+
+    .spot-row-label {
+      width: 17px;
+      height: 18px;
+      color: #625c66;
+      font-size: 10px;
+    }
+
+    .spot-seat-grid {
+      gap: 4px;
+    }
+
+    .spot-seat-row {
+      gap: 3px;
+    }
+
+    .ss {
+      width: 17px;
+      height: 17px;
+      border-radius: 4px;
+    }
+
+    .ss.av {
+      background: #fff;
+      border: 1.2px solid #c9c7cb;
+    }
+
+    .ss.av:hover {
+      background: #f0e8ff;
+      border-color: var(--fast-purple);
+    }
+
+    .ss.rv {
+      background: #c8c6c8;
+      border-color: #c8c6c8;
+    }
+
+    .ss.sl {
+      position: relative;
+      background: var(--fast-purple);
+      border-color: var(--fast-purple);
+      box-shadow: inset 0 0 0 1px rgba(255,255,255,.34);
+    }
+
+    .ss.sl::after {
+      content: "";
+      position: absolute;
+      left: 5px;
+      top: 3px;
+      width: 5px;
+      height: 8px;
+      border: solid #fff;
+      border-width: 0 1.5px 1.5px 0;
+      transform: rotate(45deg);
+    }
+
+    .spot-seat-legend {
+      justify-content: center;
+      gap: 17px;
+      padding: 12px 0 0;
+      border: 0;
+      background: transparent;
+    }
+
+    .spot-seat-legend span {
+      color: #4f4954;
+      font-size: 10px;
+    }
+
+    .spot-seat-bottom {
+      padding: 11px 16px 150px;
+      border: 0;
+      background: transparent;
+    }
+
+    .spot-seat-summary {
+      margin-bottom: 9px;
+    }
+
+    .spot-seat-labels {
+      color: #7030e8;
+      font-size: 18px;
+      font-weight: 700;
+    }
+
+    .spot-seat-price {
+      color: #17141d;
+      font-size: 19px;
+      font-weight: 700;
+    }
+
+    .spot-checkout-btn {
+      border-radius: 10px;
+      padding: 14px;
+      background: linear-gradient(100deg, #bd18df 0%, #2500ff 100%);
+      font-size: 17px;
+      font-weight: 650;
+      box-shadow: 0 8px 18px rgba(83,23,229,.22);
+    }
   </style>
 </head>
 <body>
@@ -1921,7 +2839,7 @@
 
       <div class="home-content">
         <button class="nearby-card" type="button" data-toast="현재 위치를 기준으로 주변 극장을 찾습니다.">
-          <svg class="pin-icon" viewBox="0 0 24 30"><path d="M12 29S2 18.2 2 10.5C2 4.7 6.5 1 12 1s10 3.7 10 9.5C22 18.2 12 29 12 29Z"/><circle cx="12" cy="10.5" r="3.4" fill="#fff"/></svg>
+          <img class="pin-icon" src="../img/figma/fast-icon-pin.png" alt="" aria-hidden="true">
           <span><strong>내 주변 극장</strong><small>현재 위치 기준</small></span>
           <svg class="chevron" viewBox="0 0 24 24"><path d="m9 5 7 7-7 7"/></svg>
         </button>
@@ -1931,11 +2849,12 @@
             <strong>강남</strong>
             <small>1.2km</small>
             <span class="format-tags"><span>IMAX</span><span>DOLBY</span><span>4DX</span></span>
+            <svg class="chevron" viewBox="0 0 24 24" aria-hidden="true"><path d="m9 5 7 7-7 7"/></svg>
           </button>
           <button class="map-card" type="button" data-toast="지도 보기를 준비하고 있습니다.">
             <span>
               <svg class="pin-icon" viewBox="0 0 24 30"><path d="M12 29S2 18.2 2 10.5C2 4.7 6.5 1 12 1s10 3.7 10 9.5C22 18.2 12 29 12 29Z"/><circle cx="12" cy="10.5" r="3.4" fill="#fff"/></svg>
-              <br>지도보기
+              <br>지도 보기
             </span>
           </button>
         </div>
@@ -1946,9 +2865,9 @@
         </div>
 
         <div class="favorite-list">
-          <button class="favorite-row" type="button" data-toast="코엑스 극장을 선택했습니다."><strong>코엑스</strong><span>2.3km</span><svg class="chevron" viewBox="0 0 24 24"><path d="m9 5 7 7-7 7"/></svg></button>
-          <button class="favorite-row" type="button" data-toast="신촌 극장을 선택했습니다."><strong>신촌</strong><span>4.1km</span><svg class="chevron" viewBox="0 0 24 24"><path d="m9 5 7 7-7 7"/></svg></button>
-          <button class="favorite-row" type="button" data-toast="수원 스타필드 극장을 선택했습니다."><strong>수원 스타필드</strong><span>16.2km</span><svg class="chevron" viewBox="0 0 24 24"><path d="m9 5 7 7-7 7"/></svg></button>
+          <button class="favorite-row" type="button" data-toast="코엑스 극장을 선택했습니다."><strong>코엑스</strong><span>2.3km</span><i class="favorite-benefit" aria-hidden="true"></i></button>
+          <button class="favorite-row" type="button" data-toast="신촌 극장을 선택했습니다."><strong>신촌</strong><span>4.1km</span><i class="favorite-benefit" aria-hidden="true"></i></button>
+          <button class="favorite-row" type="button" data-toast="수원 스타필드 극장을 선택했습니다."><strong>수원 스타필드</strong><span>16.2km</span><i class="favorite-benefit" aria-hidden="true"></i></button>
         </div>
 
         <button class="all-theaters" type="button" data-toast="전체 극장 목록을 준비하고 있습니다.">극장 전체보기</button>
@@ -1956,15 +2875,173 @@
 
       <nav class="home-nav" aria-label="메가박스 하단 메뉴">
         <button class="home-nav-btn active" type="button" data-toast="현재 홈 화면입니다.">
-          <svg viewBox="0 0 24 24"><path d="m4 10 8-7 8 7v10h-6v-6h-4v6H4z"/></svg>
+          <img class="fast-nav-icon fast-home-img" src="../img/figma/fast-icon-home.png" alt="" aria-hidden="true">
           홈
         </button>
-        <button class="mega-mode-btn" id="mega-mode-btn" type="button" aria-label="메가 모드 시작">MEGA<br>MODE</button>
+        <button class="mega-mode-btn" id="mega-mode-btn" type="button" aria-label="메가 모드 시작">MGEA<br>MODE</button>
         <button class="home-nav-btn" type="button" data-toast="모바일오더를 준비하고 있습니다.">
-          <svg viewBox="0 0 24 24"><path d="M7 8h10l1 12H6L7 8Z"/><path d="M9 8a3 3 0 0 1 6 0M8 4h8"/></svg>
+          <img class="fast-nav-icon fast-order-img" src="../img/figma/fast-icon-order.png" alt="" aria-hidden="true">
           모바일오더
         </button>
       </nav>
+    </section>
+
+    <section class="screen spot-screen" id="spot-screen" aria-label="극장 상영 목록">
+      <header class="spot-topbar">
+        <button class="icon-btn" id="spot-back-btn" type="button" aria-label="뒤로 가기">
+          <svg viewBox="0 0 24 24" width="22" height="22"><path d="m15 18-6-6 6-6"/></svg>
+        </button>
+        <span class="spot-brand">spot</span>
+        <button class="icon-btn" type="button" aria-label="알림" data-toast="알림이 없습니다.">
+          <svg viewBox="0 0 24 24" width="22" height="22"><path d="M6 10a6 6 0 1 1 12 0v3l2 3H4l2-3v-3zM10 19a2 2 0 0 0 4 0"/></svg>
+        </button>
+      </header>
+
+      <div class="spot-dates">
+        <button class="spot-date active" type="button"><span class="spot-date-today">오늘</span><span>05.20</span></button>
+        <button class="spot-date" type="button"><span>05.21</span></button>
+        <button class="spot-date" type="button"><span>05.22</span></button>
+        <button class="spot-date" type="button"><span>05.23</span></button>
+        <button class="spot-date" type="button"><span>05.24</span></button>
+      </div>
+
+      <div class="spot-scroll">
+        <p class="spot-section-label">상영중인 영화</p>
+        <div class="spot-movie">
+          <img class="spot-poster" src="../군체.webp" alt="군체 포스터">
+          <div class="spot-info">
+            <div class="spot-movie-header">
+              <span class="spot-title">군체</span>
+              <svg class="spot-arrow" viewBox="0 0 24 24" width="16" height="16"><path d="m9 5 7 7-7 7"/></svg>
+            </div>
+            <div class="spot-tag"><span class="spot-tag-age">15</span><span class="spot-tag-genre">Action</span></div>
+            <div class="spot-times">
+              <button class="spot-time-btn" type="button">10:30</button>
+              <button class="spot-time-btn" type="button">11:30</button>
+              <button class="spot-time-btn" type="button">12:10</button>
+              <button class="spot-time-btn" type="button">19:30</button>
+            </div>
+          </div>
+        </div>
+        <div class="spot-movie">
+          <img class="spot-poster" src="../백룸.jpg" alt="백룸 포스터">
+          <div class="spot-info">
+            <div class="spot-movie-header">
+              <span class="spot-title">백룸</span>
+              <svg class="spot-arrow" viewBox="0 0 24 24" width="16" height="16"><path d="m9 5 7 7-7 7"/></svg>
+            </div>
+            <div class="spot-tag"><span class="spot-tag-age">15</span><span class="spot-tag-genre">Thriller</span></div>
+            <div class="spot-times">
+              <button class="spot-time-btn" type="button">10:30</button>
+              <button class="spot-time-btn" type="button">11:30</button>
+              <button class="spot-time-btn" type="button">12:10</button>
+              <button class="spot-time-btn" type="button">19:30</button>
+            </div>
+          </div>
+        </div>
+        <div class="spot-movie">
+          <img class="spot-poster" src="../그로구.webp" alt="만달로리안과 그로구 포스터">
+          <div class="spot-info">
+            <div class="spot-movie-header">
+              <span class="spot-title">만달로리안과 그로구</span>
+              <svg class="spot-arrow" viewBox="0 0 24 24" width="16" height="16"><path d="m9 5 7 7-7 7"/></svg>
+            </div>
+            <div class="spot-tag"><span class="spot-tag-age">15</span><span class="spot-tag-genre">Thriller</span></div>
+            <div class="spot-times">
+              <button class="spot-time-btn" type="button">10:30</button>
+              <button class="spot-time-btn" type="button">11:30</button>
+              <button class="spot-time-btn" type="button">12:10</button>
+              <button class="spot-time-btn" type="button">19:30</button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <nav class="home-nav" aria-label="하단 메뉴">
+        <button class="home-nav-btn spot-home-btn" type="button">
+          <img class="fast-nav-icon fast-home-img" src="../img/figma/fast-icon-home.png" alt="" aria-hidden="true">
+          홈
+        </button>
+        <button class="mega-mode-btn" id="spot-mega-btn" type="button" aria-label="메가 모드 시작">MGEA<br>MODE</button>
+        <button class="home-nav-btn" type="button" data-toast="모바일오더를 준비하고 있습니다.">
+          <img class="fast-nav-icon fast-order-img" src="../img/figma/fast-icon-order.png" alt="" aria-hidden="true">
+          모바일오더
+        </button>
+      </nav>
+    </section>
+
+    <section class="screen spot-seat-screen" id="spot-seat-screen" aria-label="좌석 선택">
+      <header class="spot-seat-topbar">
+        <button class="icon-btn" id="spot-seat-back" type="button" aria-label="뒤로 가기">
+          <svg viewBox="0 0 24 24" width="22" height="22"><path d="m15 18-6-6 6-6"/></svg>
+        </button>
+        <span class="spot-seat-header-title">좌석선택</span>
+      </header>
+
+      <div class="spot-progress">
+        <span class="spot-step done">극장</span>
+        <span class="spot-step-sep">─</span>
+        <span class="spot-step done">영화/시간</span>
+        <span class="spot-step-sep">─</span>
+        <span class="spot-step active">좌석</span>
+        <span class="spot-step-sep">─</span>
+        <span class="spot-step">결제</span>
+      </div>
+
+      <div class="spot-seat-movie-info">
+        <img class="spot-seat-poster" src="../군체.webp" alt="군체">
+        <div>
+          <div class="spot-seat-movie-name">군체</div>
+          <div class="spot-seat-meta">강남 / 4관 · 2026.05.27 (수) 13:20</div>
+        </div>
+      </div>
+
+      <div class="spot-seat-content">
+        <p class="spot-screen-label">SCREEN</p>
+        <div class="spot-seat-grid-wrap">
+          <div class="spot-row-labels" id="spot-row-labels"></div>
+          <div class="spot-seat-grid" id="spot-seat-map"></div>
+        </div>
+        <div class="spot-seat-legend">
+          <span><i class="leg-av"></i>선택가능</span>
+          <span><i class="leg-sl"></i>선택됨</span>
+          <span><i class="leg-rv"></i>예매완료</span>
+        </div>
+      </div>
+
+      <div class="spot-seat-bottom">
+        <div class="spot-seat-summary">
+          <span class="spot-seat-labels">E7, E8 &nbsp;총 2석</span>
+          <span class="spot-seat-price">28,000원</span>
+        </div>
+        <button class="spot-checkout-btn" type="button" id="spot-checkout-btn">
+          <span class="btn-text">결제하기</span>
+          <span class="btn-spinner"></span>
+        </button>
+      </div>
+
+      <nav class="home-nav" aria-label="하단 메뉴">
+        <button class="home-nav-btn spot-seat-home-btn" type="button">
+          <img class="fast-nav-icon fast-home-img" src="../img/figma/fast-icon-home.png" alt="" aria-hidden="true">
+          홈
+        </button>
+        <button class="mega-mode-btn" id="spot-seat-mega-btn" type="button" aria-label="메가 모드 시작">MGEA<br>MODE</button>
+        <button class="home-nav-btn" type="button" data-toast="모바일오더를 준비하고 있습니다.">
+          <img class="fast-nav-icon fast-order-img" src="../img/figma/fast-icon-order.png" alt="" aria-hidden="true">
+          모바일오더
+        </button>
+      </nav>
+
+      <div id="spot-payment-modal" role="dialog" aria-modal="true" aria-label="결제 완료">
+        <div class="spot-payment-dialog">
+          <div class="spot-payment-check">
+            <svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg>
+          </div>
+          <p class="spot-payment-title">결제되었습니다</p>
+          <p class="spot-payment-sub">E7, E8 · 총 2석<br>28,000원이 결제되었습니다.</p>
+          <button class="spot-payment-close" type="button">확인</button>
+        </div>
+      </div>
     </section>
 
     <section class="screen movie-screen" id="movie-screen" aria-label="영화 선택">
@@ -2142,6 +3219,6 @@
     <div class="toast" id="toast" role="status"></div>
   </main>
 
-  <script type="module" src="../main.js/main.js?v=38"></script>
+  <script type="module" src="../main.js/main.js?v=48"></script>
 </body>
 </html>
